@@ -23,7 +23,7 @@ export const Hero = () => {
                             </Typography>
                             <Typography variant="h6" color="black" textAlign="justify" >Save time, be Reactive - A social network for developers</Typography>
                             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', justifyContent: 'space-between', mt: 3 }}>
-                                <Button href="#features" sx={{ width: '40%' }} variant='outlined' color="primary" >Learn More</Button>
+                                <Button href="#features" sx={{ width: '40%' }} variant='outlined' color="secondary" >Learn More</Button>
                                 <Typography>or</Typography>
                                 <Button sx={{ width: '40%' }} variant='contained' color="secondary" onClick={() => { navigate('/signup') }} endIcon={<ArrowForward />}>Get Started</Button>
                             </Box>

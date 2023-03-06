@@ -9,6 +9,8 @@ class User(db.Model):
     email = db.Column(db.String(80), nullable=False)
     avatar = db.Column(db.String(200), nullable=True)
     post = db.relationship("Post", backref="user")
+    comment = db.relationship("Comment", backref="user")
+
 
     def __init__(self, **kwargs):
         self.username = kwargs["username"]
@@ -79,7 +81,7 @@ class Post(db.Model):
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, **kwargs):
         self.post_id = kwargs["post_id"]
@@ -100,5 +102,38 @@ class Like(db.Model):
             "id" : self.id,
             "post_id" : self.post_id,
             "user_id" : self.user_id
+        }
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, nullable=False)
+    text = db.Column(db.String(140), nullable=False)
+    date = db.Column(db.String(80), nullable=False)
+
+    def __init__(self, **kwargs):
+        self.post_id = kwargs["post_id"]
+        self.user_id = kwargs["user_id"]
+        self.text = kwargs["text"]
+        self.date = kwargs["date"]
+
+    @classmethod
+    def create(cls, **kwargs):
+        new_comment = cls(**kwargs)
+        db.session.add(new_comment)
+        try:
+            db.session.commit()
+            return new_comment
+        except Exception as Error: 
+            raise Exception(Error.args[0], 400)
+
+    def serialize(self):
+        return {
+            "id" : self.id,
+            "post_id" : self.post_id,
+            "user_id" : self.user.id,
+            "username" : self.user.username,
+            "user_avatar": self.user.avatar,
+            "text" : self.text
         }
 

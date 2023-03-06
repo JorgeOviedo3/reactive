@@ -12,6 +12,7 @@ import { Footer } from "./component/utils/footer.jsx";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
+import { Feed } from "./pages/feed";
 
 let theme = createTheme({
     palette: {
@@ -24,6 +25,9 @@ let theme = createTheme({
         },
         clear: {
             main: '#FFFFFF'
+        },
+        dark: {
+            main: '#000000'
         }
     },
 },
@@ -45,6 +49,7 @@ const Layout = () => {
                             <Route element={<Home />} path="/" />
                             <Route element={<Login />} path="/login" />
                             <Route element={<Signup />} path="/signup" />
+                            <Route element={<Feed />} path="/feed" />
                             <Route element={<Demo />} path="/demo" />
                             <Route element={<Single />} path="/single/:theid" />
                             <Route element={<h1>Not found!</h1>} />

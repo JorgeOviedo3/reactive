@@ -49,7 +49,7 @@ export default function Navbar() {
 	}, [])
 
 	return (
-		<AppBar sx={{ backgroundColor: "white" }} position="sticky">
+		<AppBar sx={{ backgroundColor: "#FFFFFFF0 " }} position="sticky">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					<Box component="img" onClick={() => { navigate('/') }} sx={{ pb: 0.5, display: { xs: 'none', md: 'flex' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
@@ -103,7 +103,10 @@ export default function Navbar() {
 							}}
 						>
 							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
+								<MenuItem key={page} onClick={() => {
+									handleCloseNavMenu();
+									navigate('/feed')
+								}}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
 							))}
@@ -114,8 +117,12 @@ export default function Navbar() {
 						{pages.map((page) => (
 							<Button
 								key={page}
-								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: '#0f0139', display: 'block' }}
+								color="secondary"
+								onClick={() => {
+									handleCloseNavMenu();
+									navigate('/feed')
+								}}
+								sx={{ my: 2, display: 'block' }}
 							>
 								{page}
 							</Button>

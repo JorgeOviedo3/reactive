@@ -1,14 +1,15 @@
-import { Box, Container, Divider, Paper, Typography } from "@mui/material";
+import { BottomNavigation, Box, Container, Typography } from "@mui/material";
 import React, { Component } from "react";
+import ReactiveLogoWhite from "../../../img/ReactiveLogoWhite.png"
 
 export const Footer = () => (
 	<Box sx={{
-		width: '100%',
-		height: '10vh',
-	}} component="footer" square variant="outlined">
-		<Divider />
-		<Container maxWidth="lg">
-			<Typography variant="h3">Footer</Typography>
+		mt: 5,
+		backgroundColor: '#437dff',
+		height: '30vh'
+	}}>
+		<Container>
+			<Box component="img" sx={{ width: '50px' }} src={ReactiveLogoWhite}></Box>
 		</Container>
 	</Box>
 );

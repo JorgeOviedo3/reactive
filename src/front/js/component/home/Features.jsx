@@ -18,7 +18,7 @@ export const Features = () => {
                         <Typography variant="h2" sx={{ color: 'white', fontWeight: 500, fontSize: { xs: '40px', md: '3.75rem' } }}>A place where you can share your code</Typography>
                     </Box>
                     <Box height="70%" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', overflow: 'visible' }}>
-                        <Button variant="contained" color="primary" sx={{ ml: 5, width: '50%' }}>Our mission</Button>
+                        <Button variant="contained" color="primary" sx={{ ml: 5, width: '50%' }}>Our Features</Button>
                         <Box component="img" sx={{ mt: 3, width: '200px' }} src={ReactiveReceipt}></Box>
                     </Box>
                 </Box >
