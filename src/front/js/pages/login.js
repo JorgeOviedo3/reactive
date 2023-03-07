@@ -21,19 +21,17 @@ export const Login = () => {
 
     return (
         <Box sx={{ p: { md: 2, sm: 0 }, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
-            <Container>
-                <Typography variant="h1" color="black" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h2" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Log In
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', maxWidth: '700px' }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '300px', md: '700px' } }}>
                     <Box sx={{
-                        borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column',
-                        backgroundImage: 'url(https://cdn.discordapp.com/attachments/865816064298188833/1079641293627605073/SignUpHeaderBlack.svg)',
-                        backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'
+                        borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
                         <AccountCircleSharp sx={{ width: '100px', height: '100px', color: 'white', mt: -4 }} />
                     </Box>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, background: 'white', p: 5 }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
                         <TextField
                             fullWidth
                             required

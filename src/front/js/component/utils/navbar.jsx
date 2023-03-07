@@ -16,10 +16,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
 import ReactiveLogo from "../../../img/ReactiveLogo.png"
+import { Add, Upload } from '@mui/icons-material';
 
 
 const pages = ['Feed'];
-const settings = ['Profile', 'Settings', 'Logout'];
+const settings = ['Profile', 'Settings', 'Upload', 'Logout'];
 
 export default function Navbar() {
 	const { store, actions } = useContext(Context)
@@ -49,7 +50,7 @@ export default function Navbar() {
 	}, [])
 
 	return (
-		<AppBar sx={{ backgroundColor: "#FFFFFFF0 " }} position="sticky">
+		<AppBar sx={{ backgroundColor: '#272727F0' }} position="sticky">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					<Box component="img" onClick={() => { navigate('/') }} sx={{ pb: 0.5, display: { xs: 'none', md: 'flex' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
@@ -65,7 +66,7 @@ export default function Navbar() {
 							fontFamily: 'monospace',
 							fontWeight: 700,
 							pb: 0.5,
-							color: 'black',
+							color: 'white',
 							textDecoration: 'none',
 							'&:hover': { cursor: 'pointer' }
 						}}
@@ -80,7 +81,7 @@ export default function Navbar() {
 							aria-controls="menu-appbar"
 							aria-haspopup="true"
 							onClick={handleOpenNavMenu}
-							color="primary"
+							color="secondary"
 						>
 							<MenuIcon />
 						</IconButton>
@@ -117,7 +118,7 @@ export default function Navbar() {
 						{pages.map((page) => (
 							<Button
 								key={page}
-								color="secondary"
+								color="gray1"
 								onClick={() => {
 									handleCloseNavMenu();
 									navigate('/feed')
@@ -131,21 +132,23 @@ export default function Navbar() {
 
 					<Box sx={{ flexGrow: 0 }}>
 						{store.authenticated === true ?
-							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-									<Avatar alt="Remy Sharp" src={store.currentUser.avatar} />
-								</IconButton>
-							</Tooltip> :
+							<>
+								<Tooltip title="Open settings">
+									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+										<Avatar alt="Remy Sharp" src={store.currentUser.avatar} />
+									</IconButton>
+								</Tooltip>
+							</> :
 							<>
 								<Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-									<Button variant="outlined"
+									<Button color="gray1"
 										onClick={() => { navigate('/login') }}>Log in</Button>
-									<Button variant="contained" color="secondary"
+									<Button variant="outlined" color="secondary"
 										onClick={() => { navigate('/signup') }}>Sign up</Button>
 								</Box>
 								<Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
 									<IconButton>
-										<LoginIcon color="primary" onClick={() => { navigate('/login') }} />
+										<LoginIcon color="secondary" onClick={() => { navigate('/login') }} />
 									</IconButton>
 								</Box>
 							</>}
@@ -170,8 +173,11 @@ export default function Navbar() {
 						>
 							{settings.map((setting) => (
 								<MenuItem key={setting} onClick={() => {
+									if (setting === "Logout") actions.logOff();
+									if (setting === "Profile") navigate(`/user/${store.currentUser.username}`)
+									if (setting === "Logout") actions.logOff();
+									if (setting === "Logout") actions.logOff();
 									handleCloseUserMenu();
-									actions.logOff();
 								}}>
 									<Typography textAlign="center">{setting}</Typography>
 								</MenuItem>

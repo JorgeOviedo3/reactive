@@ -16,18 +16,21 @@ import { SingleUser } from "./pages/singleuser";
 
 let theme = createTheme({
     palette: {
-        mode: 'light',
+        mode: 'dark',
         primary: {
-            main: '#0f0139',
+            main: '#8091fc',
         },
         secondary: {
-            main: '#437dff',
+            main: '#a266e2',
         },
         clear: {
             main: '#FFFFFF'
         },
         dark: {
             main: '#000000'
+        },
+        gray1: {
+            main: '#D3D3D3'
         }
     },
 },

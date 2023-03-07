@@ -51,15 +51,13 @@ def sign_up():
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
 
-@api.route("/get-user-by-id", methods=['GET'])
-@jwt_required()
-def get_user_by_id():
-    current_user_id = get_jwt_identity()
-    user = User.query.filter_by(id = current_user_id).one_or_none()
+@api.route("/user/<string:username_param>", methods=['GET'])
+def get_user(username_param):
+    user = User.query.filter_by(username = username_param).one_or_none()
     if user is not None:
-        return jsonify(user.serialize()), 201
+        return jsonify(user.serialize()), 200
     else: 
-        return jsonify("User doesn't exists or token is not verified"), 400
+        return jsonify("User doesn't exists"), 400
 
 @api.route('/update-user', methods=['PUT'])
 @jwt_required()
@@ -135,6 +133,29 @@ def get_posts(page_param):
     data["posts"] = posts
     return jsonify(data)
 
+@api.route('/post/<int:id_param>')
+def get_post_by_id(id_param):
+    post = Post.query.filter_by(id = id_param).one_or_none()
+    if post is not None:
+        serialize = post.serialize()
+        comments = Comment.query.filter_by(post_id = id_param).order_by(Comment.id.desc())
+        comments_dic = []
+        comments_count = 0
+        likes = Like.query.filter_by(post_id = id_param)
+        likes_count = 0
+        for like in likes:
+            likes_count = likes_count + 1
+        for comment in comments:
+            comments_dic.append(comment.serialize())
+            comments_count = comments_count+1
+        serialize["comments"] = comments_dic
+        serialize["comments_count"] = comments_count
+        serialize["likes_count"] = likes_count
+        return jsonify(serialize), 200
+    else:
+        return jsonify("Post not found"), 500
+
+
 @api.route('/delete_post/<int:post_id_param>', methods=['DELETE'])
 @jwt_required()
 def delete_post(post_id_param):
@@ -160,19 +181,29 @@ def create_like(post_id_param):
     new_like_data["post_id"] = post_id_param
     try:
         new_like = Like.create(**new_like_data)
-        return jsonify(new_like.serialize()), 201
+        return jsonify(True), 201
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
 
-@api.route('/delete_like/<int:like_id_param>', methods=['DELETE'])
+@api.route('/is_liked/<int:post_id_param>', methods=['GET'])
 @jwt_required()
-def delete_like(like_id_param):
+def is_liked(post_id_param):
     current_user_id = get_jwt_identity()
-    like = Like.query.filter_by(id=like_id_param, user_id=current_user_id).one_or_none()
+    like = Like.query.filter_by(post_id = post_id_param, user_id = current_user_id).one_or_none()
+    if like is not None:
+        return jsonify(True), 200
+    else:
+        return jsonify(False), 200
+
+@api.route('/delete_like/<int:post_id_param>', methods=['DELETE'])
+@jwt_required()
+def delete_like(post_id_param):
+    current_user_id = get_jwt_identity()
+    like = Like.query.filter_by(post_id=post_id_param, user_id=current_user_id).one_or_none()
     if like is not None:
         db.session.delete(like)
         db.session.commit()
-        return jsonify(f'Like ID:{like_id_param} deleted successfully')
+        return jsonify(False), 200
     else:
         return jsonify("Like not found"), 400
 

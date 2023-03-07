@@ -1,9 +1,10 @@
 import { Avatar, Box, Container, Divider, Grid, IconButton, Paper, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../store/appContext';
-import { ChatBubble, FavoriteBorder, MoreHoriz } from '@mui/icons-material';
+import { ChatBubble, ChatBubbleOutline, ChatBubbleOutlined, FavoriteBorder, MoreHoriz } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { BottomScrollListener } from 'react-bottom-scroll-listener';
+import { Liked } from '../utils/Liked.jsx';
 
 
 export const Posts = () => {
@@ -29,7 +30,6 @@ export const Posts = () => {
             setPosts([...posts, ...body.posts]);
             setHasNext(body.has_next);
             setNextPage(body.next_page);
-            console.log(body.posts, body.has_next);
         } catch (error) {
             console.log(error);
         }
@@ -45,7 +45,6 @@ export const Posts = () => {
 
     return (
         <Box sx={{
-            backgroundImage: 'radial-gradient( circle farthest-corner at 12.3% 19.3%,  rgba(85,88,218,1) 0%, rgba(95,209,249,1) 100.2% )'
         }}>
             <BottomScrollListener offset={900} onBottom={handleContainerOnBottom}>
                 <Container sx={{ p: 0 }}>
@@ -55,7 +54,7 @@ export const Posts = () => {
                             posts.map((post) => {
                                 return (
                                     <Grid item xs={12} md={6} key={post.id}>
-                                        <Paper elevation={6} sx={{ borderRadius: '10px', m: 2, p: 2 }}>
+                                        <Paper elevation={12} sx={{ borderRadius: '10px', m: 2, p: 2 }}>
                                             <Box sx={{ display: 'flex', mb: 1, alignItems: 'center', justifyContent: 'space-between' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                                     <Avatar src={post.user_avatar} sx={{ cursor: 'pointer' }} onClick={(e) => {
@@ -75,15 +74,10 @@ export const Posts = () => {
                                                 }} sx={{ borderRadius: 2, width: '100%', cursor: 'pointer', "&:hover": { opacity: '0.9' } }} />
                                             </Box>
                                             <Box sx={{ display: 'flex', justifyContent: 'start', gap: 2, alignItems: 'center' }}>
+                                                <Liked id={post.id} likes_count={post.likes_count}></Liked>
                                                 <Box sx={{ display: 'flex' }}>
                                                     <IconButton>
-                                                        <FavoriteBorder />
-                                                        <Typography  >{post.likes_count}</Typography>
-                                                    </IconButton>
-                                                </Box>
-                                                <Box sx={{ display: 'flex' }}>
-                                                    <IconButton>
-                                                        <ChatBubble />
+                                                        <ChatBubbleOutline color="primary" />
                                                         <Typography >{post.comments_count}</Typography>
                                                     </IconButton>
                                                 </Box>
