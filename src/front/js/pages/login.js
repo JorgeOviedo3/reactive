@@ -25,7 +25,7 @@ export const Login = () => {
                 <Typography variant="h2" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Log In
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '300px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '300px', sm: '500px', md: '700px' } }}>
                     <Box sx={{
                         borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
