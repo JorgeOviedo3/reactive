@@ -1,5 +1,5 @@
 import { ArrowBack, CalendarMonth, ChatBubbleOutline, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Person, Widgets } from "@mui/icons-material";
-import { Avatar, Box, Container, Divider, IconButton, Paper, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, Divider, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import Image from "mui-image";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -9,8 +9,9 @@ import { Context } from "../store/appContext";
 export const SinglePost = props => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
-	const [data, setData] = useState(null)
+	const [data, setData] = useState(null);
 	const navigate = useNavigate();
+	const [newComment, setNewComment] = useState('');
 
 	const getPostById = async () => {
 		const ops = {
@@ -18,18 +19,42 @@ export const SinglePost = props => {
 			headers: {
 				"Content-Type": "application/json"
 			}
-		}
+		};
 		try {
 			const response = await fetch(`${store.api}/post/${params.id}`, ops);
 			if (!response.ok) {
-				alert('problem getting post')
+				alert('problem getting post');
 			}
 			const body = await response.json();
-			setData(body)
+			setData(body);
 		} catch (error) {
-			console.log(error)
-		}
+			console.log(error);
+		};
 	}
+
+	const sendComment = async () => {
+		const ops = {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Authorization": `Bearer ${store.token}`
+			},
+			body: JSON.stringify({
+				text: newComment
+			}),
+		};
+		try {
+			const response = await fetch(`${store.api}/create_comment/${data.id}`, ops);
+			if (!response.ok) {
+				alert("Comment problem endpoint /create_comment");
+				return false;
+			}
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
+	};
 
 	useEffect(() => {
 		getPostById();
@@ -111,12 +136,55 @@ export const SinglePost = props => {
 						</Paper>
 
 						{/* START POST COMMENTS */}
-						<Box>
-							<Typography>Comments</Typography>
+						<Box sx={{ my: 2, p: 2 }}>
+							<Typography sx={{ ml: -2 }} variant="h4">Comments:</Typography>
+							<Typography sx={{ mt: 2 }}>Join the conversation</Typography>
+							<Box sx={{ my: 1, display: 'flex', alignItems: 'start', gap: 2 }}>
+								<TextField
+									variant="filled"
+									color="gray1"
+									label="Comment"
+									multiline
+									fullWidth
+									maxRows={10}
+									onChange={(e) => {
+										setNewComment(e.target.value);
+									}}
+									value={newComment}
+									sx={{ mb: 1 }}
+								/>
+								<Button
+									onClick={() => {
+										if (newComment !== "") {
+											if (sendComment()) {
+												setNewComment("");
+												getPostById();
+											}
+										}
+									}}
+									sx={{ height: '55px', width: '120px' }} variant="contained" color="primary">Submit</Button>
+							</Box>
+							<Typography sx={{ mt: 1 }}>See what people is saying</Typography>
+							<Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between', }}>
+								{data.comments.map((comment) => {
+									return (
+										<Paper sx={{ display: 'flex', p: 2, my: 1 }} key={`comment-${comment.id}`} elevation={12}>
+											<Avatar src={comment.user_avatar} />
+											<Box sx={{ ml: 2 }}>
+												<Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 4, alignItems: 'center' }}>
+													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{data.user_username}</Typography>
+													<Typography>{comment.date}</Typography>
+												</Box>
+												<Typography>{comment.text}</Typography>
+											</Box>
+										</Paper>
+									)
+								})}
+							</Box>
 						</Box>
 						{/* END POST COMMENTS */}
 					</>}
 			</Container>
-		</Box>
+		</Box >
 	);
 };

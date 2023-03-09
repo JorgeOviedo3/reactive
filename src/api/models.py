@@ -134,6 +134,7 @@ class Comment(db.Model):
             "user_id" : self.user.id,
             "username" : self.user.username,
             "user_avatar": self.user.avatar,
-            "text" : self.text
+            "text" : self.text,
+            "date": self.date
         }
 

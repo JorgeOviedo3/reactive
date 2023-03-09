@@ -216,7 +216,7 @@ def delete_like(post_id_param):
 def create_comment(post_id_param):
     current_user_id = get_jwt_identity()
     date = datetime.datetime.now()
-    date = date.strftime("%d %b %Y")
+    date = date.strftime("%d/%m/%Y")
     new_comment_data = request.json
     new_comment_data["post_id"] = post_id_param
     new_comment_data["user_id"] = current_user_id
