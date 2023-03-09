@@ -80,7 +80,7 @@ export const Liked = (props) => {
                 unLike();
             }
         } else {
-            navigate('/signup')
+            navigate('/login')
         }
     }
 
@@ -93,13 +93,13 @@ export const Liked = (props) => {
             {liked ?
                 <Box sx={{ display: 'flex' }}>
                     <IconButton onClick={handleLike}>
-                        <Favorite color="secondary" />
+                        <Favorite sx={{ mr: 1 }} color="secondary" />
                         <Typography >{likesCount}</Typography>
                     </IconButton>
                 </Box> :
                 <Box sx={{ display: 'flex' }}>
                     <IconButton onClick={handleLike}>
-                        <FavoriteBorder color="secondary" />
+                        <FavoriteBorder sx={{ mr: 1 }} color="secondary" />
                         <Typography >{likesCount}</Typography>
                     </IconButton>
                 </Box>}

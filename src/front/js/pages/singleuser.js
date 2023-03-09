@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 export const SingleUser = props => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
 
     const getUser = async () => {
         const ops = {
@@ -33,7 +33,9 @@ export const SingleUser = props => {
 
     return (
         <Box>
-            <Typography>{data.username}</Typography>
+            {data === null ? <Typography>Loading...</Typography> :
+                <Typography>{data.username}</Typography>
+            }
         </Box>
     );
 };

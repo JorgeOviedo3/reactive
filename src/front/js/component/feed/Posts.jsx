@@ -1,7 +1,7 @@
-import { Avatar, Box, Container, Divider, Grid, IconButton, Paper, Typography } from '@mui/material'
+import { Avatar, Box, Container, Grid, IconButton, Paper, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../store/appContext';
-import { ChatBubble, ChatBubbleOutline, ChatBubbleOutlined, FavoriteBorder, MoreHoriz } from '@mui/icons-material';
+import { ChatBubbleOutline, Comment, MoreHoriz } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { BottomScrollListener } from 'react-bottom-scroll-listener';
 import { Liked } from '../utils/Liked.jsx';
@@ -48,7 +48,6 @@ export const Posts = () => {
         }}>
             <BottomScrollListener offset={900} onBottom={handleContainerOnBottom}>
                 <Container sx={{ p: 0 }}>
-                    <Typography textAlign="center" variant="h2" sx={{ color: 'white' }}>Most Recent Posts</Typography>
                     <Grid container>
                         {posts === [] ? <></> :
                             posts.map((post) => {
@@ -77,7 +76,7 @@ export const Posts = () => {
                                                 <Liked id={post.id} likes_count={post.likes_count}></Liked>
                                                 <Box sx={{ display: 'flex' }}>
                                                     <IconButton>
-                                                        <ChatBubbleOutline color="primary" />
+                                                        <Comment color="primary" />
                                                         <Typography >{post.comments_count}</Typography>
                                                     </IconButton>
                                                 </Box>

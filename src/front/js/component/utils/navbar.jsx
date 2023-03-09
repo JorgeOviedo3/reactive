@@ -12,12 +12,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LoginIcon from '@mui/icons-material/Login';
 
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
-import ReactiveLogo from "../../../img/ReactiveLogo.png"
-import { Add, Upload } from '@mui/icons-material';
 
+import ReactiveLogo from "../../../img/ReactiveLogo.png"
 
 const pages = ['Feed'];
 const settings = ['Profile', 'Settings', 'Upload', 'Logout'];
@@ -25,9 +24,16 @@ const settings = ['Profile', 'Settings', 'Upload', 'Logout'];
 export default function Navbar() {
 	const { store, actions } = useContext(Context)
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
-	const [loggedIn, setLoggedIn] = useState(false);
+
+	const UpperCaseLocation = () => {
+		const current = location.pathname;
+		const cut = current.slice(1);
+		const capitalized = cut.charAt(0).toUpperCase() + cut.slice(1);
+		return (<Typography sx={{ position: 'absolute', ml: 7 }} variant="h6">{capitalized}</Typography>)
+	}
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -44,13 +50,8 @@ export default function Navbar() {
 		setAnchorElUser(null);
 	};
 
-	useEffect(() => {
-		const authenticated = sessionStorage.getItem("authenticated");
-		if (authenticated) setLoggedIn(true);
-	}, [])
-
 	return (
-		<AppBar sx={{ backgroundColor: '#272727F0' }} position="sticky">
+		<AppBar position="sticky">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					<Box component="img" onClick={() => { navigate('/') }} sx={{ pb: 0.5, display: { xs: 'none', md: 'flex' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
@@ -74,7 +75,7 @@ export default function Navbar() {
 						Reactive
 					</Typography>
 
-					<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+					<Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
 						<IconButton
 							size="large"
 							aria-label="account of current user"
@@ -85,6 +86,7 @@ export default function Navbar() {
 						>
 							<MenuIcon />
 						</IconButton>
+						<UpperCaseLocation />
 						<Menu
 							id="menu-appbar"
 							anchorEl={anchorElNav}
@@ -105,15 +107,15 @@ export default function Navbar() {
 						>
 							{pages.map((page) => (
 								<MenuItem key={page} onClick={() => {
+									if (page === "Feed") navigate('/feed')
 									handleCloseNavMenu();
-									navigate('/feed')
 								}}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
 							))}
 						</Menu>
 					</Box>
-					<Box component="img" onClick={() => { navigate('/') }} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
+					<Box component="img" onClick={() => { navigate('/') }} sx={{ display: { xs: 'flex', md: 'none' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{pages.map((page) => (
 							<Button
