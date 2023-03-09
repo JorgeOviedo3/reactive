@@ -1,29 +1,37 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/utils/scrollToTop";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
-import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
+import ScrollToTop from "./component/utils/scrollToTop";
 import Navbar from "./component/utils/navbar.jsx";
+import { Home } from "./pages/home";
 import { Footer } from "./component/utils/footer.jsx";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
+import { Feed } from "./pages/feed";
+import { SinglePost } from "./pages/singlepost";
+import { SingleUser } from "./pages/singleuser";
+import { UploadPost } from "./pages/uploadpost";
 
 let theme = createTheme({
     palette: {
-        mode: 'light',
+        mode: 'dark',
         primary: {
-            main: '#0f0139',
+            main: '#8091fc',
         },
         secondary: {
-            main: '#437dff',
+            main: '#a266e2',
         },
         clear: {
             main: '#FFFFFF'
+        },
+        dark: {
+            main: '#000000'
+        },
+        gray1: {
+            main: '#D3D3D3'
         }
     },
 },
@@ -45,8 +53,10 @@ const Layout = () => {
                             <Route element={<Home />} path="/" />
                             <Route element={<Login />} path="/login" />
                             <Route element={<Signup />} path="/signup" />
-                            <Route element={<Demo />} path="/demo" />
-                            <Route element={<Single />} path="/single/:theid" />
+                            <Route element={<Feed />} path="/feed" />
+                            <Route element={<SinglePost />} path="/post/:id" />
+                            <Route element={<SingleUser />} path="/user/:username" />
+                            <Route element={<UploadPost />} path="/upload" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />

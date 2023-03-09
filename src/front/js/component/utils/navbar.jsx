@@ -12,21 +12,28 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LoginIcon from '@mui/icons-material/Login';
 
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Context } from '../../store/appContext';
+
 import ReactiveLogo from "../../../img/ReactiveLogo.png"
 
-
 const pages = ['Feed'];
-const settings = ['Profile', 'Settings', 'Logout'];
+const settings = ['Profile', 'Settings', 'Upload', 'Logout'];
 
 export default function Navbar() {
 	const { store, actions } = useContext(Context)
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [anchorElNav, setAnchorElNav] = useState(null);
 	const [anchorElUser, setAnchorElUser] = useState(null);
-	const [loggedIn, setLoggedIn] = useState(false);
+
+	const UpperCaseLocation = () => {
+		const current = location.pathname;
+		const cut = current.slice(1);
+		const capitalized = cut.charAt(0).toUpperCase() + cut.slice(1);
+		return (<Typography sx={{ position: 'absolute', ml: 5 }} variant="h6">{capitalized}</Typography>)
+	}
 
 	const handleOpenNavMenu = (event) => {
 		setAnchorElNav(event.currentTarget);
@@ -43,13 +50,8 @@ export default function Navbar() {
 		setAnchorElUser(null);
 	};
 
-	useEffect(() => {
-		const authenticated = sessionStorage.getItem("authenticated");
-		if (authenticated) setLoggedIn(true);
-	}, [])
-
 	return (
-		<AppBar sx={{ backgroundColor: "white" }} position="sticky">
+		<AppBar position="sticky">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					<Box component="img" onClick={() => { navigate('/') }} sx={{ pb: 0.5, display: { xs: 'none', md: 'flex' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
@@ -65,7 +67,7 @@ export default function Navbar() {
 							fontFamily: 'monospace',
 							fontWeight: 700,
 							pb: 0.5,
-							color: 'black',
+							color: 'white',
 							textDecoration: 'none',
 							'&:hover': { cursor: 'pointer' }
 						}}
@@ -73,17 +75,18 @@ export default function Navbar() {
 						Reactive
 					</Typography>
 
-					<Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+					<Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
 						<IconButton
 							size="large"
 							aria-label="account of current user"
 							aria-controls="menu-appbar"
 							aria-haspopup="true"
 							onClick={handleOpenNavMenu}
-							color="primary"
+							color="secondary"
 						>
 							<MenuIcon />
 						</IconButton>
+						<UpperCaseLocation />
 						<Menu
 							id="menu-appbar"
 							anchorEl={anchorElNav}
@@ -103,19 +106,26 @@ export default function Navbar() {
 							}}
 						>
 							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
+								<MenuItem key={page} onClick={() => {
+									if (page === "Feed") navigate('/feed')
+									handleCloseNavMenu();
+								}}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
 							))}
 						</Menu>
 					</Box>
-					<Box component="img" onClick={() => { navigate('/') }} sx={{ display: { xs: 'flex', md: 'none' }, mr: 1, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
+					<Box component="img" onClick={() => { navigate('/') }} sx={{ display: { xs: 'flex', md: 'none' }, width: "30px", '&:hover': { cursor: 'pointer' } }} src={ReactiveLogo}></Box>
 					<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 						{pages.map((page) => (
 							<Button
 								key={page}
-								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: '#0f0139', display: 'block' }}
+								color="gray1"
+								onClick={() => {
+									handleCloseNavMenu();
+									navigate('/feed')
+								}}
+								sx={{ my: 2, display: 'block' }}
 							>
 								{page}
 							</Button>
@@ -124,21 +134,23 @@ export default function Navbar() {
 
 					<Box sx={{ flexGrow: 0 }}>
 						{store.authenticated === true ?
-							<Tooltip title="Open settings">
-								<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-									<Avatar alt="Remy Sharp" src={store.currentUser.avatar} />
-								</IconButton>
-							</Tooltip> :
+							<>
+								<Tooltip title="Open settings">
+									<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+										<Avatar alt="Remy Sharp" src={store.currentUser.avatar} />
+									</IconButton>
+								</Tooltip>
+							</> :
 							<>
 								<Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
-									<Button variant="outlined"
+									<Button color="gray1"
 										onClick={() => { navigate('/login') }}>Log in</Button>
-									<Button variant="contained" color="secondary"
+									<Button variant="outlined" color="secondary"
 										onClick={() => { navigate('/signup') }}>Sign up</Button>
 								</Box>
 								<Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
 									<IconButton>
-										<LoginIcon color="primary" onClick={() => { navigate('/login') }} />
+										<LoginIcon color="secondary" onClick={() => { navigate('/login') }} />
 									</IconButton>
 								</Box>
 							</>}
@@ -163,8 +175,11 @@ export default function Navbar() {
 						>
 							{settings.map((setting) => (
 								<MenuItem key={setting} onClick={() => {
+									if (setting === "Logout") actions.logOff();
+									if (setting === "Profile") navigate(`/user/${store.currentUser.username}`)
+									if (setting === "Upload") navigate('/upload')
+									if (setting === "Logout") actions.logOff();
 									handleCloseUserMenu();
-									actions.logOff();
 								}}>
 									<Typography textAlign="center">{setting}</Typography>
 								</MenuItem>

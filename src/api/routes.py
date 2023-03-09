@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Post, Like
+from api.models import db, User, Post, Like, Comment
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 import datetime
@@ -51,15 +51,13 @@ def sign_up():
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
 
-@api.route("/get-user-by-id", methods=['GET'])
-@jwt_required()
-def get_user_by_id():
-    current_user_id = get_jwt_identity()
-    user = User.query.filter_by(id = current_user_id).one_or_none()
+@api.route("/user/<string:username_param>", methods=['GET'])
+def get_user(username_param):
+    user = User.query.filter_by(username = username_param).one_or_none()
     if user is not None:
-        return jsonify(user.serialize()), 201
+        return jsonify(user.serialize()), 200
     else: 
-        return jsonify("User doesn't exists or token is not verified"), 400
+        return jsonify("User doesn't exists"), 400
 
 @api.route('/update-user', methods=['PUT'])
 @jwt_required()
@@ -96,6 +94,7 @@ def update_user():
 def create_post():
     current_user_id = get_jwt_identity()
     date = datetime.datetime.now()
+    date = date.strftime("%d %b %Y")
     new_post_data = request.json
     new_post_data["user_id"] = current_user_id
     new_post_data["date"] = date
@@ -106,6 +105,10 @@ def create_post():
             raise Exception("readme invalid",400)
         if "code" not in new_post_data or new_post_data["code"] == "":
             raise Exception("code invalid",400)
+        if "description" not in new_post_data or new_post_data["description"] == "":
+            raise Exception("description invalid",400)
+        if "category" not in new_post_data or new_post_data["category"] == "":
+            raise Exception("category invalid",400)
         new_post = Post.create(**new_post_data)
         return jsonify(new_post.serialize()), 201
     except Exception as error: 
@@ -113,14 +116,49 @@ def create_post():
 
 @api.route('/get_posts/<int:page_param>', methods=['GET'])
 def get_posts(page_param):
-    pagination = Post.query.order_by(Post.date.desc()).paginate(page=page_param, per_page=6)
+    pagination = Post.query.order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
     posts = []
     for post in pagination.items:
-        posts.append(post.serialize())
+        serialize = post.serialize()
+        likes = Like.query.filter_by(post_id = post.id)
+        likes_count = 0
+        for like in likes:
+            likes_count = likes_count + 1
+        comments = Comment.query.filter_by(post_id = post.id)
+        comment_count = 0
+        for comment in comments:
+            comment_count = comment_count + 1
+        serialize["likes_count"] = likes_count
+        serialize["comments_count"] = comment_count
+        posts.append(serialize)
     data = {}
     data["has_next"] = pagination.has_next
+    data["next_page"] = pagination.next_num
     data["posts"] = posts
     return jsonify(data)
+
+@api.route('/post/<int:id_param>')
+def get_post_by_id(id_param):
+    post = Post.query.filter_by(id = id_param).one_or_none()
+    if post is not None:
+        serialize = post.serialize()
+        comments = Comment.query.filter_by(post_id = id_param).order_by(Comment.id.desc())
+        comments_dic = []
+        comments_count = 0
+        likes = Like.query.filter_by(post_id = id_param)
+        likes_count = 0
+        for like in likes:
+            likes_count = likes_count + 1
+        for comment in comments:
+            comments_dic.append(comment.serialize())
+            comments_count = comments_count+1
+        serialize["comments"] = comments_dic
+        serialize["comments_count"] = comments_count
+        serialize["likes_count"] = likes_count
+        return jsonify(serialize), 200
+    else:
+        return jsonify("Post not found"), 500
+
 
 @api.route('/delete_post/<int:post_id_param>', methods=['DELETE'])
 @jwt_required()
@@ -147,18 +185,51 @@ def create_like(post_id_param):
     new_like_data["post_id"] = post_id_param
     try:
         new_like = Like.create(**new_like_data)
-        return jsonify(new_like.serialize()), 201
+        return jsonify(True), 201
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
 
-@api.route('/delete_like/<int:like_id_param>', methods=['DELETE'])
+@api.route('/is_liked/<int:post_id_param>', methods=['GET'])
 @jwt_required()
-def delete_like(like_id_param):
+def is_liked(post_id_param):
     current_user_id = get_jwt_identity()
-    like = Like.query.filter_by(id=like_id_param, user_id=current_user_id).one_or_none()
+    like = Like.query.filter_by(post_id = post_id_param, user_id = current_user_id).one_or_none()
+    if like is not None:
+        return jsonify(True), 200
+    else:
+        return jsonify(False), 200
+
+@api.route('/delete_like/<int:post_id_param>', methods=['DELETE'])
+@jwt_required()
+def delete_like(post_id_param):
+    current_user_id = get_jwt_identity()
+    like = Like.query.filter_by(post_id=post_id_param, user_id=current_user_id).one_or_none()
     if like is not None:
         db.session.delete(like)
         db.session.commit()
-        return jsonify(f'Like ID:{like_id_param} deleted successfully')
+        return jsonify(False), 200
     else:
         return jsonify("Like not found"), 400
+
+#End Like Endpoints
+
+#Start Comment Endpoints
+
+@api.route('/create_comment/<int:post_id_param>', methods=['POST'])
+@jwt_required()
+def create_comment(post_id_param):
+    current_user_id = get_jwt_identity()
+    date = datetime.datetime.now()
+    date = date.strftime("%d/%m/%Y")
+    new_comment_data = request.json
+    new_comment_data["post_id"] = post_id_param
+    new_comment_data["user_id"] = current_user_id
+    new_comment_data["date"] = date
+    try:
+        if "text" not in new_comment_data or new_comment_data["text"] == "":
+            raise Exception("Comment invalid",400)
+        new_comment = Comment.create(**new_comment_data)
+        return jsonify(new_comment.serialize()), 201
+    except Exception as error: 
+        return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
+
