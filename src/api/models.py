@@ -45,6 +45,8 @@ class Post(db.Model):
     code = db.Column(db.String(10000), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    category = db.Column(db.String(80), nullable=False)
 
     def __init__(self, **kwargs):
         self.title = kwargs["title"]
@@ -53,6 +55,8 @@ class Post(db.Model):
         self.code = kwargs["code"]
         self.user_id = kwargs["user_id"]
         self.date = kwargs["date"]
+        self.description = kwargs["description"]
+        self.category = kwargs["category"]
 
     @classmethod
     def create(cls, **kwargs):
@@ -73,6 +77,8 @@ class Post(db.Model):
             "image" : self.image,
             "code" : self.code,
             "date": self.date,
+            "description": self.description,
+            "category": self.category,
             "user_id": self.user.id,
             "user_username": self.user.username,
             "user_avatar": self.user.avatar

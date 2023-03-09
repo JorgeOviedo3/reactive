@@ -1,5 +1,5 @@
-import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Code, ContentPaste, Email, Lock, MenuBook, Password, Person4, Visibility, VisibilityOff, Widgets } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, IconButton, InputAdornment, Link, Paper, TextField, Typography } from "@mui/material";
+import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Code, ContentPaste, Description, Email, Lock, MenuBook, Password, Person4, Visibility, VisibilityOff, Widgets } from "@mui/icons-material";
+import { Avatar, Box, Button, Container, FormControl, IconButton, InputAdornment, InputLabel, Link, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
 import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +14,8 @@ export const UploadPost = () => {
     const [readme, setReadme] = useState("");
     const [code, setCode] = useState("");
     const [image, setImage] = useState("");
+    const [category, setCategory] = useState("");
+    const [description, setDescription] = useState("");
 
     const pasteCode = async () => {
         const text = await navigator.clipboard.readText();
@@ -32,16 +34,19 @@ export const UploadPost = () => {
                 title: title,
                 readme: readme,
                 code: code,
-                image: image
+                image: image,
+                description: description,
+                category: category
             }),
         };
         try {
             const response = await fetch(`${store.api}/create_post`, ops);
             if (!response.ok) {
-                alert("Comment problem endpoint /create_post");
+                alert("Upload post problem endpoint /create_post");
                 return false;
             }
-            return true;
+            const body = await response.json()
+            navigate(`/post/${body.id}`)
         } catch (error) {
             console.log(error);
             return false;
@@ -70,7 +75,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Component Title"
+                            label="Title"
                             type="text"
                             onChange={(event) => {
                                 setTitle(event.target.value)
@@ -80,6 +85,38 @@ export const UploadPost = () => {
                                 startAdornment: <InputAdornment position="start"><Widgets color="primary" /></InputAdornment>,
                             }}
                         />
+                        <TextField
+                            fullWidth
+                            autoFocus
+                            variant="filled"
+                            color="gray1"
+                            required
+                            label="Description"
+                            multiline
+                            type="text"
+                            onChange={(event) => {
+                                setDescription(event.target.value)
+                            }}
+                            value={description}
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start"><Description sx={{ mt: -2 }} color="primary" /></InputAdornment>,
+                            }}
+                        />
+                        <FormControl
+                            variant="filled" fullWidth>
+                            <InputLabel id='test-select-label'>Category</InputLabel>
+                            <Select
+                                labelId='test-select-label'
+                                value={category}
+                                color="gray1"
+                                required
+                                onChange={(e) => { setCategory(e.target.value) }}
+                            >
+                                <MenuItem value={"Section"}>Section</MenuItem>
+                                <MenuItem value={"Snippet"}>Snippet</MenuItem>
+                                <MenuItem value={"Full Page"}>Full Page</MenuItem>
+                            </Select>
+                        </FormControl>
                         <TextField
                             fullWidth
                             autoFocus
@@ -128,7 +165,7 @@ export const UploadPost = () => {
                             </Box> :
                             <img src={image}></img>
                         }
-                        {title.length > 8 && title.length < 80 && readme.length > 5 && readme.length < 500 && code.length > 5 && code.length < 10000 && image !== "" ?
+                        {title !== "" && readme !== "" && code !== "" && description !== "" && category !== "" && image !== "" ?
                             <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
                                 sendPost();
                             }}>POST</Button> :

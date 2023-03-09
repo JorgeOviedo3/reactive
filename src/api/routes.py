@@ -105,6 +105,10 @@ def create_post():
             raise Exception("readme invalid",400)
         if "code" not in new_post_data or new_post_data["code"] == "":
             raise Exception("code invalid",400)
+        if "description" not in new_post_data or new_post_data["description"] == "":
+            raise Exception("description invalid",400)
+        if "category" not in new_post_data or new_post_data["category"] == "":
+            raise Exception("category invalid",400)
         new_post = Post.create(**new_post_data)
         return jsonify(new_post.serialize()), 201
     except Exception as error: 

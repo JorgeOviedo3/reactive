@@ -1,4 +1,4 @@
-import { ArrowBack, CalendarMonth, ChatBubbleOutline, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Person, Widgets } from "@mui/icons-material";
+import { ArrowBack, CalendarMonth, Category, ChatBubbleOutline, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Person, Widgets } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, Divider, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -88,7 +88,14 @@ export const SinglePost = props => {
 							{/* START POST DATA */}
 							<Box sx={{ p: 1 }}>
 								<Box>
-									<Typography variant="h4" color="gray1" textAlign="start" sx={{ mb: 1 }}><Widgets color="primary" sx={{ mr: 1 }} />{data.title}</Typography>
+									<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+										<Typography variant="h4" color="gray1" textAlign="start" sx={{ mb: 1 }}><Widgets color="primary" sx={{ mr: 1 }} />{data.title}</Typography>
+										<Paper sx={{ display: 'flex', alignItems: 'center', p: 2, gap: 1 }}>
+											<Typography sx={{ fontSize: '1.2rem' }}>{data.category}</Typography>
+											<Category color="secondary" />
+										</Paper>
+									</Box>
+									<Typography sx={{ mb: 2 }}>{data.description}</Typography>
 									<a href={data.image} target="_blank">
 										<Box component={'img'} src={data.image} onClick={() => {
 										}} sx={{
