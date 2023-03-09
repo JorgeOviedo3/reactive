@@ -20,6 +20,7 @@ typing-extensions = "*"
 importlib-metadata = "*"
 python-dotenv = "~=0.21.1"
 importlib-resources = "*"
+flask-jwt-extended = "*"
 
 [requires]
 python_version = "3.10"
