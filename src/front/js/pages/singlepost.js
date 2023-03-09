@@ -1,10 +1,10 @@
 import { ArrowBack, CalendarMonth, ChatBubbleOutline, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Person, Widgets } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, Divider, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material";
-import Image from "mui-image";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Liked } from "../component/utils/Liked.jsx";
 import { Context } from "../store/appContext";
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 
 export const SinglePost = props => {
 	const { store, actions } = useContext(Context);
@@ -107,16 +107,23 @@ export const SinglePost = props => {
 									</Paper>
 								</Box>
 								<Box sx={{ my: 3 }}>
-									<Typography><Code fontSize="sm" color="primary" /> Code:</Typography>
-									<Paper elevation={4} sx={{ p: 1 }}>
+									<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+
+										<Typography><Code fontSize="sm" color="primary" /> Code:</Typography>
 										<IconButton onClick={() => {
 											navigator.clipboard.writeText(data.code)
 										}}>
 											<ContentCopy color="primary" />
 										</IconButton>
-										<Typography>
-											{data.code}
-										</Typography>
+									</Box>
+									<Paper elevation={4} sx={{ p: 1 }}>
+										<Box>
+											<LiveProvider code={data.code}>
+												<LiveEditor />
+												<LiveError />
+												<LivePreview />
+											</LiveProvider>
+										</Box>
 									</Paper>
 								</Box>
 							</Box>
@@ -188,6 +195,7 @@ export const SinglePost = props => {
 							</Box>
 						</Box>
 						{/* END POST COMMENTS */}
+
 					</>}
 			</Container>
 		</Box >

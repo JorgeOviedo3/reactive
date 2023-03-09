@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploadWidget from "../component/cloudinary/CloudinaryUploadWidget";
 import { Context } from "../store/appContext";
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 
 export const UploadPost = () => {
     const navigate = useNavigate();
@@ -115,7 +116,11 @@ export const UploadPost = () => {
                                     pasteCode();
                                 }}><ContentPaste /></IconButton></InputAdornment>
                             }}
-                        />
+                        ></TextField>
+                        <LiveProvider code={code}>
+                            <LiveError />
+                            <LivePreview />
+                        </LiveProvider>
                         {image === "" ?
                             <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
                                 <CloudinaryUploadWidget preset="yeu70xua" width={1080} set={setImage} />
@@ -123,7 +128,7 @@ export const UploadPost = () => {
                             </Box> :
                             <img src={image}></img>
                         }
-                        {title.length > 8 && title.length < 80 && readme.length > 25 && readme.length < 500 && code.length > 25 && code.length < 10000 && image.length > 10 ?
+                        {title.length > 8 && title.length < 80 && readme.length > 5 && readme.length < 500 && code.length > 5 && code.length < 10000 && image !== "" ?
                             <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
                                 sendPost();
                             }}>POST</Button> :
