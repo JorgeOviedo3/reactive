@@ -31,6 +31,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ token: token });
 					setStore({ currentUser: body });
 					setStore({ authenticated: true })
+					sessionStorage.setItem("authenticated", true);
 				} catch (error) {
 					console.log(error)
 					actions.logOff();

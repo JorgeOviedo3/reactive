@@ -19,7 +19,7 @@ export const Signup = () => {
 
     useEffect(() => {
         if (store.authenticated === true) {
-            navigate('/')
+            navigate('/feed')
         }
     }, [store.authenticated])
 
@@ -29,7 +29,7 @@ export const Signup = () => {
                 <Typography variant="h1" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Sign Up
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '320px', sm: '500px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '320px', md: '700px' } }}>
                     <Box sx={{
                         borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
@@ -41,7 +41,7 @@ export const Signup = () => {
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
                         {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" ? <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
-                            <CloudinaryUploadWidget avatar={avatar} setAvatar={setAvatar} />
+                            <CloudinaryUploadWidget avatar={avatar} set={setAvatar} preset="ajoinryy" width={350} />
                             <Typography variant="body2">Please upload your profile picture.</Typography>
                         </Box> :
                             <></>}

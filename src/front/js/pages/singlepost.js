@@ -72,8 +72,8 @@ export const SinglePost = props => {
 									<IconButton>
 										<ArrowBack color="secondary" onClick={() => { navigate('/feed') }} />
 									</IconButton>
-									<Paper onClick={(e) => { navigate(`/user/${data.user_username}`); }}
-										sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', p: 1, "&:hover": { opacity: '0.8' }, ml: 1 }}>
+									<Paper elevation={4} onClick={(e) => { navigate(`/user/${data.user_username}`); }}
+										sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' }, ml: 1 }}>
 										<Avatar src={data.user_avatar} sx={{ cursor: 'pointer' }} />
 										<Typography color="gray1" sx={{ cursor: 'pointer', fontWeight: '500', fontSize: '1.2rem', ml: 1 }}>{data.user_username}</Typography>
 									</Paper>
@@ -136,8 +136,8 @@ export const SinglePost = props => {
 						</Paper>
 
 						{/* START POST COMMENTS */}
-						<Box sx={{ my: 2, p: 2 }}>
-							<Typography sx={{ ml: -2 }} variant="h4">Comments:</Typography>
+						<Box sx={{ my: 2, }}>
+							<Typography sx={{}} variant="h4">Comments:</Typography>
 							<Typography sx={{ mt: 2 }}>Join the conversation</Typography>
 							<Box sx={{ my: 1, display: 'flex', alignItems: 'start', gap: 2 }}>
 								<TextField
@@ -153,24 +153,29 @@ export const SinglePost = props => {
 									value={newComment}
 									sx={{ mb: 1 }}
 								/>
-								<Button
-									onClick={() => {
-										if (newComment !== "") {
-											if (sendComment()) {
-												setNewComment("");
-												getPostById();
+								{store.authenticated && newComment !== "" ?
+									<Button
+										onClick={() => {
+											if (newComment !== "") {
+												if (sendComment()) {
+													setNewComment("");
+													getPostById();
+												}
 											}
-										}
-									}}
-									sx={{ height: '55px', width: '120px' }} variant="contained" color="primary">Submit</Button>
+										}}
+										sx={{ height: '55px', width: '120px' }} variant="contained" color="primary">Submit</Button>
+									:
+									<Button sx={{ height: '55px', width: '120px' }} variant="contained" disabled color="primary">Submit</Button>
+								}
+
 							</Box>
-							<Typography sx={{ mt: 1 }}>See what people is saying</Typography>
-							<Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'space-between', }}>
+							<Typography sx={{ mt: 3 }}>Or see what people are saying</Typography>
+							<Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'start' }}>
 								{data.comments.map((comment) => {
 									return (
-										<Paper sx={{ display: 'flex', p: 2, my: 1 }} key={`comment-${comment.id}`} elevation={12}>
+										<Paper sx={{ display: 'flex', p: 2, my: 1, width: '100%', maxWidth: { xs: '320', md: '32%' } }} key={`comment-${comment.id}`} elevation={12}>
 											<Avatar src={comment.user_avatar} />
-											<Box sx={{ ml: 2 }}>
+											<Box sx={{ ml: 2, width: '100%' }}>
 												<Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 4, alignItems: 'center' }}>
 													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{data.user_username}</Typography>
 													<Typography>{comment.date}</Typography>

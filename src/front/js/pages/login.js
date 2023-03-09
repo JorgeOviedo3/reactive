@@ -15,7 +15,7 @@ export const Login = () => {
 
     useEffect(() => {
         if (store.authenticated === true) {
-            navigate('/')
+            navigate('/feed')
         }
     }, [store.authenticated])
 

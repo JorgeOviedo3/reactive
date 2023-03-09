@@ -32,7 +32,7 @@ export default function Navbar() {
 		const current = location.pathname;
 		const cut = current.slice(1);
 		const capitalized = cut.charAt(0).toUpperCase() + cut.slice(1);
-		return (<Typography sx={{ position: 'absolute', ml: 7 }} variant="h6">{capitalized}</Typography>)
+		return (<Typography sx={{ position: 'absolute', ml: 5 }} variant="h6">{capitalized}</Typography>)
 	}
 
 	const handleOpenNavMenu = (event) => {
@@ -177,7 +177,7 @@ export default function Navbar() {
 								<MenuItem key={setting} onClick={() => {
 									if (setting === "Logout") actions.logOff();
 									if (setting === "Profile") navigate(`/user/${store.currentUser.username}`)
-									if (setting === "Logout") actions.logOff();
+									if (setting === "Upload") navigate('/upload')
 									if (setting === "Logout") actions.logOff();
 									handleCloseUserMenu();
 								}}>

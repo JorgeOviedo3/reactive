@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 import injectContext from "./store/appContext";
 
@@ -7,12 +8,12 @@ import ScrollToTop from "./component/utils/scrollToTop";
 import Navbar from "./component/utils/navbar.jsx";
 import { Home } from "./pages/home";
 import { Footer } from "./component/utils/footer.jsx";
-import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Feed } from "./pages/feed";
 import { SinglePost } from "./pages/singlepost";
 import { SingleUser } from "./pages/singleuser";
+import { UploadPost } from "./pages/uploadpost";
 
 let theme = createTheme({
     palette: {
@@ -55,6 +56,7 @@ const Layout = () => {
                             <Route element={<Feed />} path="/feed" />
                             <Route element={<SinglePost />} path="/post/:id" />
                             <Route element={<SingleUser />} path="/user/:username" />
+                            <Route element={<UploadPost />} path="/upload" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />

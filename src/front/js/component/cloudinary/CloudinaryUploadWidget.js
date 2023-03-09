@@ -5,7 +5,6 @@ import React, { Component } from "react";
 class CloudinaryUploadWidget extends Component {
     componentDidMount() {
         const cloudName = "davqfxnhe"; // replace with your own cloud name
-        const uploadPreset = "ajoinryy"; // replace with your own upload preset
 
         // Remove the comments from the code below to add
         // additional functionality.
@@ -17,7 +16,7 @@ class CloudinaryUploadWidget extends Component {
         var myWidget = window.cloudinary.createUploadWidget(
             {
                 cloudName: cloudName,
-                uploadPreset: uploadPreset,
+                uploadPreset: this.props.preset,
                 cropping: true, //add a cropping step
                 // showAdvancedOptions: true,  //add advanced options (public_id and tag)
                 // sources: [ "local", "url"], // restrict the upload sources to URL and local files
@@ -27,12 +26,12 @@ class CloudinaryUploadWidget extends Component {
                 // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
                 // clientAllowedFormats: ["images"], //restrict uploading to image files only
                 // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-                maxImageWidth: 350, //Scales the image down to a width of 2000 pixels before uploading
+                maxImageWidth: this.props.width, //Scales the image down to a width of 2000 pixels before uploading
                 theme: "blue", //change to a purple theme
             },
             (error, result) => {
                 if (!error && result && result.event === "success") {
-                    this.props.setAvatar(result.info.url);
+                    this.props.set(result.info.url);
                     console.log("Done! Here is the image info: ", result.info);
                 }
             }
@@ -48,7 +47,7 @@ class CloudinaryUploadWidget extends Component {
 
     render() {
         return (
-            <Button variant="outlined" color="secondary">
+            <Button variant="outlined" color="primary">
                 <AddPhotoAlternate />
             </Button>
         );
