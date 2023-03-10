@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowBack, CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, Widgets } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
 import { LiveProvider, LiveEditor } from "react-live";
-import { Liked } from "../component/posts/utils/Liked.jsx";
+import { Liked } from "../component/posts/helpers/Liked.jsx";
 import { Context } from "../store/appContext";
-import { LiveCodePreview } from "../component/posts/utils/LiveCodePreview.jsx";
+import { LiveCodePreview } from "../component/posts/helpers/LiveCodePreview.jsx";
 
 export const SinglePost = () => {
 	const { store, actions } = useContext(Context);

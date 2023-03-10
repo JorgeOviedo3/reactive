@@ -4,7 +4,7 @@ import { Box, Button, Container, FormControl, IconButton, InputAdornment, InputL
 import { Code, ContentPaste, Description, MenuBook, Widgets } from "@mui/icons-material";
 import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";
 import { Context } from "../store/appContext";
-import { LiveCodePreview } from "../component/posts/utils/LiveCodePreview.jsx";
+import { LiveCodePreview } from "../component/posts/helpers/LiveCodePreview.jsx";
 
 export const UploadPost = () => {
     const navigate = useNavigate();

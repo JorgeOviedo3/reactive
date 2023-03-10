@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Widgets } from '@mui/icons-material';
 import { Avatar, Box, Grid, IconButton, Paper, Typography } from '@mui/material';
-import { Liked } from '../utils/Liked.jsx';
+import { Liked } from '../helpers/Liked.jsx';
 
 export const PostsGrid = (props) => {
     const navigate = useNavigate();
