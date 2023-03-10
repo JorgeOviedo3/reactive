@@ -1,11 +1,10 @@
-import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Code, ContentPaste, Description, Email, Lock, MenuBook, Password, Person4, Visibility, VisibilityOff, Widgets } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, FormControl, IconButton, InputAdornment, InputLabel, Link, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
-import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CloudinaryUploadWidget from "../component/cloudinary/CloudinaryUploadWidget";
+import { Box, Button, Container, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Code, ContentPaste, Description, MenuBook, Widgets } from "@mui/icons-material";
+import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";
 import { Context } from "../store/appContext";
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
+import { LiveCodePreview } from "../component/posts/utils/LiveCodePreview.jsx";
 
 export const UploadPost = () => {
     const navigate = useNavigate();
@@ -66,7 +65,7 @@ export const UploadPost = () => {
                 <Typography variant="h1" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Upload
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '320px', sm: '500px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '95%', sm: '500px', md: '700px' } }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
                         <Typography sx={{ mt: 2 }}>Here, you can share your latest reactive code components with the community and get feedback from fellow developers.</Typography>
                         <TextField
@@ -154,10 +153,7 @@ export const UploadPost = () => {
                                 }}><ContentPaste /></IconButton></InputAdornment>
                             }}
                         ></TextField>
-                        <LiveProvider code={code}>
-                            <LiveError />
-                            <LivePreview />
-                        </LiveProvider>
+                        <LiveCodePreview elevation={12} code={code} />
                         {image === "" ?
                             <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
                                 <CloudinaryUploadWidget preset="yeu70xua" width={1080} set={setImage} />
@@ -169,7 +165,7 @@ export const UploadPost = () => {
                             <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
                                 sendPost();
                             }}>POST</Button> :
-                            <Button variant="outlined" sx={{ width: '100%' }} disabled>post</Button>
+                            <Button variant="outlined" sx={{ width: '100%' }} disabled>All required</Button>
                         }
                     </Box>
                 </Paper>

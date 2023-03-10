@@ -149,8 +149,8 @@ export default function Navbar() {
 										onClick={() => { navigate('/signup') }}>Sign up</Button>
 								</Box>
 								<Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
-									<IconButton>
-										<LoginIcon color="secondary" onClick={() => { navigate('/login') }} />
+									<IconButton onClick={() => { navigate('/login') }}>
+										<LoginIcon color="secondary" />
 									</IconButton>
 								</Box>
 							</>}

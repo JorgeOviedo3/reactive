@@ -1,10 +1,10 @@
 import React from 'react'
-import { Posts } from '../component/feed/Posts.jsx'
+import { GlobalFeed } from '../component/posts/feeders/GlobalFeed.jsx'
 
 export const Feed = () => {
     return (
         <div>
-            <Posts />
+            <GlobalFeed />
         </div>
     )
 }

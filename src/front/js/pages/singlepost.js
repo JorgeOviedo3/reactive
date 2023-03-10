@@ -1,12 +1,13 @@
-import { ArrowBack, CalendarMonth, Category, ChatBubbleOutline, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Person, Widgets } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, Divider, IconButton, InputAdornment, Paper, TextField, Typography } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Liked } from "../component/utils/Liked.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowBack, CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, Widgets } from "@mui/icons-material";
+import { Avatar, Box, Button, Container, IconButton, Paper, TextField, Typography } from "@mui/material";
+import { LiveProvider, LiveEditor } from "react-live";
+import { Liked } from "../component/posts/utils/Liked.jsx";
 import { Context } from "../store/appContext";
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
+import { LiveCodePreview } from "../component/posts/utils/LiveCodePreview.jsx";
 
-export const SinglePost = props => {
+export const SinglePost = () => {
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 	const [data, setData] = useState(null);
@@ -69,8 +70,8 @@ export const SinglePost = props => {
 							{/* START POST HEADER */}
 							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
-									<IconButton>
-										<ArrowBack color="secondary" onClick={() => { navigate('/feed') }} />
+									<IconButton onClick={() => { navigate('/feed') }}>
+										<ArrowBack color="secondary" />
 									</IconButton>
 									<Paper elevation={4} onClick={(e) => { navigate(`/user/${data.user_username}`); }}
 										sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' }, ml: 1 }}>
@@ -123,15 +124,14 @@ export const SinglePost = props => {
 											<ContentCopy color="primary" />
 										</IconButton>
 									</Box>
-									<Paper elevation={4} sx={{ p: 1 }}>
+									<Paper elevation={4} sx={{ p: 1, mb: 2 }}>
 										<Box>
 											<LiveProvider code={data.code}>
 												<LiveEditor />
-												<LiveError />
-												<LivePreview />
 											</LiveProvider>
 										</Box>
 									</Paper>
+									<LiveCodePreview elevation={4} code={data.code} />
 								</Box>
 							</Box>
 							{/* END POST DATA */}

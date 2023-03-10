@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-export const SingleUser = props => {
+export const Profile = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
     const [data, setData] = useState(null);

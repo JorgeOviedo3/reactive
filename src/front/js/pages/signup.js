@@ -3,7 +3,7 @@ import { Avatar, Box, Button, Container, IconButton, InputAdornment, Link, Paper
 import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CloudinaryUploadWidget from "../component/cloudinary/CloudinaryUploadWidget";
+import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";
 import { Context } from "../store/appContext";
 
 export const Signup = () => {

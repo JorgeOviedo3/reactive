@@ -131,6 +131,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			// ---------------- END USER ACTIONS -------------
 
+			// ---------------- START POST ACTIONS -------------
+			getPosts: async (uri) => {
+				const store = getStore();
+				const ops = {
+					method: "GET",
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+				try {
+					const response = await fetch(`${store.api}${uri}`, ops);
+					if (!response.ok) {
+						alert("problem getting posts")
+						return false;
+					}
+					const body = await response.json();
+					return body;
+				} catch (error) {
+					console.log(error);
+					return false;
+				}
+			}
+			// ---------------- END POST ACTIONS -------------
+
 		}
 	};
 };
