@@ -1,11 +1,10 @@
-import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Code, ContentPaste, Description, Email, Lock, MenuBook, Password, Person4, Visibility, VisibilityOff, Widgets } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, FormControl, IconButton, InputAdornment, InputLabel, Link, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
-import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CloudinaryUploadWidget from "../component/cloudinary/CloudinaryUploadWidget";
+import { Box, Button, Container, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Paper, Select, TextField, Typography } from "@mui/material";
+import { Code, ContentPaste, Description, MenuBook, Widgets } from "@mui/icons-material";
+import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";
 import { Context } from "../store/appContext";
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
+import { LiveCodePreview } from "../component/posts/helpers/LiveCodePreview.jsx";
 
 export const UploadPost = () => {
     const navigate = useNavigate();
@@ -62,11 +61,11 @@ export const UploadPost = () => {
 
     return (
         <Box sx={{ p: { md: 2, sm: 0 }, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
-            <Container sx={{ p: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h1" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Upload
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '320px', sm: '500px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '100%', lg: '90%' } }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
                         <Typography sx={{ mt: 2 }}>Here, you can share your latest reactive code components with the community and get feedback from fellow developers.</Typography>
                         <TextField
@@ -75,7 +74,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Title"
+                            label="Title (80)"
                             type="text"
                             onChange={(event) => {
                                 setTitle(event.target.value)
@@ -91,7 +90,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Description"
+                            label="Description (5000)"
                             multiline
                             type="text"
                             onChange={(event) => {
@@ -104,7 +103,7 @@ export const UploadPost = () => {
                         />
                         <FormControl
                             variant="filled" fullWidth>
-                            <InputLabel id='test-select-label'>Category</InputLabel>
+                            <InputLabel id='test-select-label'>Category*</InputLabel>
                             <Select
                                 labelId='test-select-label'
                                 value={category}
@@ -123,7 +122,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="README"
+                            label="README (5000)"
                             multiline
                             type="text"
                             onChange={(event) => {
@@ -140,7 +139,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Code"
+                            label="Code (10000)"
                             multiline
                             type="text"
                             onChange={(event) => {
@@ -154,10 +153,7 @@ export const UploadPost = () => {
                                 }}><ContentPaste /></IconButton></InputAdornment>
                             }}
                         ></TextField>
-                        <LiveProvider code={code}>
-                            <LiveError />
-                            <LivePreview />
-                        </LiveProvider>
+                        <LiveCodePreview elevation={12} code={code} />
                         {image === "" ?
                             <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
                                 <CloudinaryUploadWidget preset="yeu70xua" width={1080} set={setImage} />
@@ -169,7 +165,7 @@ export const UploadPost = () => {
                             <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
                                 sendPost();
                             }}>POST</Button> :
-                            <Button variant="outlined" sx={{ width: '100%' }} disabled>post</Button>
+                            <Button variant="outlined" sx={{ width: '100%' }} disabled>All required</Button>
                         }
                     </Box>
                 </Paper>

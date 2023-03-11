@@ -2,7 +2,7 @@ import { Favorite, FavoriteBorder } from '@mui/icons-material'
 import { Box, IconButton, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Context } from '../../store/appContext'
+import { Context } from '../../../store/appContext'
 
 export const Liked = (props) => {
     const { store, actions } = useContext(Context);

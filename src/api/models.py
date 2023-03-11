@@ -8,15 +8,18 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False)
     avatar = db.Column(db.String(200), nullable=True)
+    date = db.Column(db.String(80), nullable=False)
     post = db.relationship("Post", backref="user")
     comment = db.relationship("Comment", backref="user")
-
+    bio = db.Column(db.String(140), nullable=True, default="Reactive is awesome!")
 
     def __init__(self, **kwargs):
         self.username = kwargs["username"]
         self.password = kwargs["password"]
         self.email = kwargs["email"]
         self.avatar = kwargs["avatar"]
+        self.date = kwargs["date"]
+        self.bio = kwargs["bio"]
     
     @classmethod
     def create(cls, **kwargs):
@@ -34,18 +37,20 @@ class User(db.Model):
             "id" : self.id,
             "username" : self.username,
             "email" : self.email,
-            "avatar" : self.avatar
+            "avatar" : self.avatar,
+            "date": self.date,
+            "bio": self.bio
         }
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
-    readme = db.Column(db.String(500), nullable=False)
+    readme = db.Column(db.String(5000), nullable=False)
     image = db.Column(db.String(200), nullable=True)
     code = db.Column(db.String(10000), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(5000), nullable=False)
     category = db.Column(db.String(80), nullable=False)
 
     def __init__(self, **kwargs):

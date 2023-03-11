@@ -40,12 +40,17 @@ def login():
 
 @api.route('/signup', methods=['POST'])
 def sign_up():
+    date = datetime.datetime.now()
+    date = date.strftime("%d %b %Y")
     new_user_data = request.json
+    new_user_data["date"] = date
     try:
         if "username" not in new_user_data or new_user_data["username"] == "":
             raise Exception("Username invalid",400)
         if "password" not in new_user_data or new_user_data["password"] == "":
             raise Exception("Password invalid",400)
+        if "bio" not in new_user_data or new_user_data["bio"] == "":
+            new_user_data["bio"] = "I love Reactive♥"
         new_user = User.create(**new_user_data)
         return jsonify(new_user.serialize()), 201
     except Exception as error: 
@@ -113,6 +118,29 @@ def create_post():
         return jsonify(new_post.serialize()), 201
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
+
+@api.route('/get_posts_profile/<int:user_id_param>/<int:page_param>', methods=['GET'])
+def get_posts_profile(user_id_param, page_param):
+    pagination = Post.query.filter_by(user_id = user_id_param).order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
+    posts = []
+    for post in pagination.items:
+        serialize = post.serialize()
+        likes = Like.query.filter_by(post_id = post.id)
+        likes_count = 0
+        for like in likes:
+            likes_count = likes_count + 1
+        comments = Comment.query.filter_by(post_id = post.id)
+        comment_count = 0
+        for comment in comments:
+            comment_count = comment_count + 1
+        serialize["likes_count"] = likes_count
+        serialize["comments_count"] = comment_count
+        posts.append(serialize)
+    data = {}
+    data["has_next"] = pagination.has_next
+    data["next_page"] = pagination.next_num
+    data["posts"] = posts
+    return jsonify(data)
 
 @api.route('/get_posts/<int:page_param>', methods=['GET'])
 def get_posts(page_param):

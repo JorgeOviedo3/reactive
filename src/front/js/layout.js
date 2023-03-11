@@ -12,8 +12,9 @@ import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Feed } from "./pages/feed";
 import { SinglePost } from "./pages/singlepost";
-import { SingleUser } from "./pages/singleuser";
+import { Profile } from "./pages/profile";
 import { UploadPost } from "./pages/uploadpost";
+import { Settings } from "./pages/settings";
 
 let theme = createTheme({
     palette: {
@@ -32,6 +33,10 @@ let theme = createTheme({
         },
         gray1: {
             main: '#D3D3D3'
+        },
+        subtlegray: {
+            main: '#a3a3a3',
+            lighter: '#cbcbcb'
         }
     },
 },
@@ -55,8 +60,9 @@ const Layout = () => {
                             <Route element={<Signup />} path="/signup" />
                             <Route element={<Feed />} path="/feed" />
                             <Route element={<SinglePost />} path="/post/:id" />
-                            <Route element={<SingleUser />} path="/user/:username" />
+                            <Route element={<Profile />} path="/user/:username" />
                             <Route element={<UploadPost />} path="/upload" />
+                            <Route element={<Settings />} path="/settings" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />
