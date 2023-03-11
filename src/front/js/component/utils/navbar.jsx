@@ -18,8 +18,8 @@ import { Context } from '../../store/appContext';
 
 import ReactiveLogo from "../../../img/ReactiveLogo.png"
 
-const pages = ['Feed'];
-const settings = ['Profile', 'Settings', 'Upload', 'Logout'];
+const pages = ['Feed', 'Upload'];
+const settings = ['Profile', 'Settings', 'Logout'];
 
 export default function Navbar() {
 	const { store, actions } = useContext(Context)
@@ -30,9 +30,11 @@ export default function Navbar() {
 
 	const UpperCaseLocation = () => {
 		const current = location.pathname;
-		const cut = current.slice(1);
-		const capitalized = cut.charAt(0).toUpperCase() + cut.slice(1);
-		return (<Typography sx={{ position: 'absolute', ml: 5 }} variant="h6">{capitalized}</Typography>)
+		if (current === "/upload" || current === "/feed") {
+			const cut = current.slice(1);
+			const capitalized = cut.charAt(0).toUpperCase() + cut.slice(1);
+			return (<Typography sx={{ position: 'absolute', ml: 5 }} variant="h6">{capitalized}</Typography>)
+		}
 	}
 
 	const handleOpenNavMenu = (event) => {
@@ -107,8 +109,9 @@ export default function Navbar() {
 						>
 							{pages.map((page) => (
 								<MenuItem key={page} onClick={() => {
-									if (page === "Feed") navigate('/feed')
 									handleCloseNavMenu();
+									if (page === "Feed") navigate('/feed');
+									if (page === "Upload") navigate('/upload');
 								}}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
@@ -120,10 +123,11 @@ export default function Navbar() {
 						{pages.map((page) => (
 							<Button
 								key={page}
-								color="gray1"
+								color={location.pathname.substring(1) == page.toLowerCase() ? "secondary" : "gray1"}
 								onClick={() => {
 									handleCloseNavMenu();
-									navigate('/feed')
+									if (page === "Feed") navigate('/feed');
+									if (page === "Upload") navigate('/upload');
 								}}
 								sx={{ my: 2, display: 'block' }}
 							>
@@ -177,8 +181,7 @@ export default function Navbar() {
 								<MenuItem key={setting} onClick={() => {
 									if (setting === "Logout") actions.logOff();
 									if (setting === "Profile") navigate(`/user/${store.currentUser.username}`)
-									if (setting === "Upload") navigate('/upload')
-									if (setting === "Logout") actions.logOff();
+									if (setting === "Settings") navigate('/settings')
 									handleCloseUserMenu();
 								}}>
 									<Typography textAlign="center">{setting}</Typography>

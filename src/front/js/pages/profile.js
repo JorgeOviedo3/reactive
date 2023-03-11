@@ -36,11 +36,16 @@ export const Profile = () => {
         <Box>
             {user === null ? <Typography>Loading...</Typography> :
                 <>
-                    <Box sx={{ pr: { xs: 0, md: 26 }, pl: { xs: 0, md: 26 } }}>
-                        <Paper elevation={20} sx={{ my: 2, p: 2 }}>
+                    <Box sx={{ pr: { xs: 0, xl: 26 }, pl: { xs: 0, xl: 26 } }}>
+                        <Paper elevation={20} sx={{ mb: 2, p: 2, display: 'flex', gap: 3, flexWrap: 'wrap', justifyContent: { xs: 'center', sm: 'start' } }}>
                             <Avatar src={user.avatar} sx={{ width: '200px', height: '200px' }} />
-                            <Typography>{user.username}</Typography>
+                            <Box>
+                                <Typography variant="h2" sx={{}}>{user.username}</Typography>
+                                <Typography color="subtlegray.lighter">{user.bio}</Typography>
+                                <Typography color="subtlegray.main">Joined {user.date}</Typography>
+                            </Box>
                         </Paper>
+                        <Typography sx={{ pl: 2 }} variant="h3">Posts</Typography>
                     </Box>
                     <ProfileFeed userId={user.id} />
                 </>

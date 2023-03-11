@@ -40,12 +40,17 @@ def login():
 
 @api.route('/signup', methods=['POST'])
 def sign_up():
+    date = datetime.datetime.now()
+    date = date.strftime("%d %b %Y")
     new_user_data = request.json
+    new_user_data["date"] = date
     try:
         if "username" not in new_user_data or new_user_data["username"] == "":
             raise Exception("Username invalid",400)
         if "password" not in new_user_data or new_user_data["password"] == "":
             raise Exception("Password invalid",400)
+        if "bio" not in new_user_data or new_user_data["bio"] == "":
+            new_user_data["bio"] = "I love Reactive♥"
         new_user = User.create(**new_user_data)
         return jsonify(new_user.serialize()), 201
     except Exception as error: 

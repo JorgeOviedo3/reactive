@@ -8,15 +8,18 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(80), nullable=False)
     avatar = db.Column(db.String(200), nullable=True)
+    date = db.Column(db.String(80), nullable=False)
     post = db.relationship("Post", backref="user")
     comment = db.relationship("Comment", backref="user")
-
+    bio = db.Column(db.String(140), nullable=True, default="Reactive is awesome!")
 
     def __init__(self, **kwargs):
         self.username = kwargs["username"]
         self.password = kwargs["password"]
         self.email = kwargs["email"]
         self.avatar = kwargs["avatar"]
+        self.date = kwargs["date"]
+        self.bio = kwargs["bio"]
     
     @classmethod
     def create(cls, **kwargs):
@@ -34,7 +37,9 @@ class User(db.Model):
             "id" : self.id,
             "username" : self.username,
             "email" : self.email,
-            "avatar" : self.avatar
+            "avatar" : self.avatar,
+            "date": self.date,
+            "bio": self.bio
         }
 
 class Post(db.Model):

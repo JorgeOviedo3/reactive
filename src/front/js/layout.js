@@ -14,6 +14,7 @@ import { Feed } from "./pages/feed";
 import { SinglePost } from "./pages/singlepost";
 import { Profile } from "./pages/profile";
 import { UploadPost } from "./pages/uploadpost";
+import { Settings } from "./pages/settings";
 
 let theme = createTheme({
     palette: {
@@ -61,6 +62,7 @@ const Layout = () => {
                             <Route element={<SinglePost />} path="/post/:id" />
                             <Route element={<Profile />} path="/user/:username" />
                             <Route element={<UploadPost />} path="/upload" />
+                            <Route element={<Settings />} path="/settings" />
                             <Route element={<h1>Not found!</h1>} />
                         </Routes>
                         <Footer />

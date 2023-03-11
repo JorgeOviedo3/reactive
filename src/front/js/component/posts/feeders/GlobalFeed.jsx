@@ -30,7 +30,7 @@ export const GlobalFeed = () => {
     return (
         <Box>
             <BottomScrollListener offset={900} onBottom={handleContainerOnBottom}>
-                <Box sx={{ pr: { xs: 0, md: 24 }, pl: { xs: 0, md: 24 } }}>
+                <Box sx={{ pr: { xs: 0, xl: 24 }, pl: { xs: 0, xl: 24 } }}>
                     <PostsGrid posts={posts} />
                     {hasNext ? <img width="50px" height="50px" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bc0c6b69321565.5b7d0cbe723b5.gif"></img> : <Typography>This is the end.</Typography>}
                 </Box>
