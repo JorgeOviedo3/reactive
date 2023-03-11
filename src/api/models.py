@@ -40,12 +40,12 @@ class User(db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(80), nullable=False)
-    readme = db.Column(db.String(500), nullable=False)
+    readme = db.Column(db.String(5000), nullable=False)
     image = db.Column(db.String(200), nullable=True)
     code = db.Column(db.String(10000), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.String(80), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(5000), nullable=False)
     category = db.Column(db.String(80), nullable=False)
 
     def __init__(self, **kwargs):

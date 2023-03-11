@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, MoreHoriz, Widgets } from '@mui/icons-material';
-import { Avatar, Box, Grid, IconButton, Paper, Typography } from '@mui/material';
+import { CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, MoreHoriz, TextSnippet, Web, Widgets } from '@mui/icons-material';
+import { Avatar, Box, Grid, IconButton, Link, Paper, Typography } from '@mui/material';
 import { Liked } from '../helpers/Liked.jsx';
 
 export const PostsGrid = (props) => {
@@ -17,58 +17,58 @@ export const PostsGrid = (props) => {
                                 {/* START POST HEADER */}
                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Paper elevation={4} onClick={(e) => { navigate(`/user/${post.user_username}`); }}
-                                            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' } }}>
+                                        <Paper onClick={(e) => { navigate(`/user/${post.user_username}`); }}
+                                            sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, pr: 2, pl: 2, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' } }}>
                                             <Avatar src={post.user_avatar} sx={{ cursor: 'pointer' }} />
-                                            <Typography color="gray1" sx={{ cursor: 'pointer', fontWeight: '500', fontSize: '1.2rem', ml: 1 }}>{post.user_username}</Typography>
+                                            <Typography sx={{ cursor: 'pointer', fontWeight: '400', fontSize: '1.2rem', ml: 1 }}>{post.user_username}</Typography>
                                         </Paper>
                                     </Box>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <Typography color="gray1" sx={{ fontSize: '1.2rem', mr: 0.5 }}>{post.date}</Typography>
+                                        <Typography sx={{ mr: 0.5, fontWeight: '300' }}>{post.date}</Typography>
                                         <CalendarMonth color="primary" />
                                     </Box>
                                 </Box>
                                 {/* END POST HEADER */}
 
                                 {/* START POST DATA */}
-                                <Box sx={{ p: 1 }}>
-                                    <Box>
-                                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <Typography variant="h4" color="gray1" textAlign="start" sx={{ mb: 1 }}><Widgets color="primary" sx={{ mr: 1 }} />{post.title}</Typography>
-                                            <Paper sx={{ display: 'flex', alignItems: 'center', p: 2, gap: 1 }}>
-                                                <Typography sx={{ fontSize: '1.2rem' }}>{post.category}</Typography>
-                                                <Category color="secondary" />
-                                            </Paper>
-                                        </Box>
-                                        <Typography sx={{ mb: 2 }}>{post.description}</Typography>
-                                        <Box component={'img'} src={post.image} onClick={() => {
-                                            navigate(`/post/${post.id}`)
-                                        }} sx={{
-                                            borderRadius: 2, width: '100%',
-                                            objectFit: 'contain',
-                                            objectPosition: 'center', cursor: 'pointer', "&:hover": { opacity: '0.9' }
-                                        }} />
-                                    </Box>
-                                    <Box sx={{ my: 3 }}>
-                                        <Typography><MenuBook fontSize="sm" color="primary" /> README:</Typography>
-                                        <Paper elevation={4} sx={{ p: 1 }}>
-                                            <Typography>
-                                                {post.readme}
-                                            </Typography>
+                                <Box>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <Typography variant="h6" color="gray1" sx={{ mb: 1, pt: 1, cursor: 'pointer' }} onClick={() => { navigate(`/post/${post.id}`) }}>
+                                            <Widgets color="primary" sx={{ mr: 1, mb: -0.5 }} />
+                                            {post.title.slice(0, 40)}
+                                            {post.title.length > 40 ? '...' : ''}
+                                        </Typography>
+                                        <Paper elevation={4} sx={{ display: 'flex', alignItems: 'end', p: 1, gap: 0.5 }}>
+                                            <Typography sx={{ fontWeight: '400', whiteSpace: 'nowrap' }}>{post.category}</Typography>
+                                            {post.category === "Section" ? <Category sx={{ color: '#80f9fc' }} /> : <></>}
+                                            {post.category === "Snippet" ? <TextSnippet sx={{ color: '#fc8085' }} /> : <></>}
+                                            {post.category === "Full Page" ? <Web sx={{ color: '#8efc80' }} /> : <></>}
                                         </Paper>
                                     </Box>
+                                    <Typography color="subtlegray.lighter" sx={{ mb: 2, mt: 1 }}>
+                                        {post.description.slice(0, 200).trim()}
+                                        {post.description.length > 200 ? <Link href={`/post/${post.id}`} >...</Link> : <></>}
+                                    </Typography>
+                                    <Box component={'img'} src={post.image} onClick={() => {
+                                        navigate(`/post/${post.id}`)
+                                    }} sx={{
+                                        borderRadius: 2, width: '100%', height: '365px',
+                                        objectFit: 'cover',
+                                        objectPosition: 'center', cursor: 'pointer', "&:hover": { opacity: '0.9' }
+                                    }} />
+
                                 </Box>
                                 {/* END POST DATA */}
 
                                 <Box sx={{ display: 'flex', justifyContent: 'start', gap: 2, alignItems: 'center' }}>
                                     <Liked id={post.id} likes_count={post.likes_count}></Liked>
                                     <Box sx={{ display: 'flex' }}>
-                                        <IconButton>
-                                            <Comment color="primary" />
+                                        <IconButton >
+                                            <Comment sx={{ mr: 1 }} color="primary" />
                                             <Typography >{post.comments_count}</Typography>
                                         </IconButton>
                                     </Box>
-                                    <IconButton sx={{ ml: 'auto' }}><MoreHoriz /></IconButton>
+                                    <IconButton onClick={() => { navigate(`/post/${post.id}`) }} sx={{ ml: 'auto' }}><MoreHoriz /></IconButton>
                                 </Box>
                             </Paper>
                         </Grid>

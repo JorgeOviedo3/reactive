@@ -32,6 +32,10 @@ let theme = createTheme({
         },
         gray1: {
             main: '#D3D3D3'
+        },
+        subtlegray: {
+            main: '#a3a3a3',
+            lighter: '#cbcbcb'
         }
     },
 },

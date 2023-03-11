@@ -74,7 +74,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Title"
+                            label="Title (80)"
                             type="text"
                             onChange={(event) => {
                                 setTitle(event.target.value)
@@ -90,7 +90,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Description"
+                            label="Description (5000)"
                             multiline
                             type="text"
                             onChange={(event) => {
@@ -103,7 +103,7 @@ export const UploadPost = () => {
                         />
                         <FormControl
                             variant="filled" fullWidth>
-                            <InputLabel id='test-select-label'>Category</InputLabel>
+                            <InputLabel id='test-select-label'>Category*</InputLabel>
                             <Select
                                 labelId='test-select-label'
                                 value={category}
@@ -122,7 +122,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="README"
+                            label="README (5000)"
                             multiline
                             type="text"
                             onChange={(event) => {
@@ -139,7 +139,7 @@ export const UploadPost = () => {
                             variant="filled"
                             color="gray1"
                             required
-                            label="Code"
+                            label="Code (10000)"
                             multiline
                             type="text"
                             onChange={(event) => {
