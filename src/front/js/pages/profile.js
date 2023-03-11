@@ -1,12 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Paper, Typography } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { ProfileFeed } from "../component/posts/feeders/ProfileFeed.jsx";
 import { Context } from "../store/appContext";
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
     const params = useParams();
-    const [data, setData] = useState(null);
+    const [user, setUser] = useState(null);
 
     const getUser = async () => {
         const ops = {
@@ -21,7 +22,7 @@ export const Profile = () => {
                 alert('problem getting post');
             }
             const body = await response.json();
-            setData(body);
+            setUser(body);
         } catch (error) {
             console.log(error);
         }
@@ -33,8 +34,16 @@ export const Profile = () => {
 
     return (
         <Box>
-            {data === null ? <Typography>Loading...</Typography> :
-                <Typography>{data.username}</Typography>
+            {user === null ? <Typography>Loading...</Typography> :
+                <>
+                    <Box sx={{ pr: { xs: 0, md: 26 }, pl: { xs: 0, md: 26 } }}>
+                        <Paper elevation={20} sx={{ my: 2, p: 2 }}>
+                            <Avatar src={user.avatar} sx={{ width: '200px', height: '200px' }} />
+                            <Typography>{user.username}</Typography>
+                        </Paper>
+                    </Box>
+                    <ProfileFeed userId={user.id} />
+                </>
             }
         </Box>
     );

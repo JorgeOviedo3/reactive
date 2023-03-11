@@ -4,14 +4,14 @@ import { BottomScrollListener } from 'react-bottom-scroll-listener';
 import { Context } from '../../../store/appContext';
 import { PostsGrid } from '../templates/PostsGrid.jsx';
 
-export const GlobalFeed = () => {
+export const ProfileFeed = (props) => {
     const { store, actions } = useContext(Context);
     let [posts, setPosts] = useState([]);
     let [hasNext, setHasNext] = useState(true);
     let [nextPage, setNextPage] = useState(1);
 
     const syncPosts = async () => {
-        const body = await actions.getPosts(`/get_posts/${nextPage}`);
+        const body = await actions.getPosts(`/get_posts_profile/${props.userId}/${nextPage}`);
         if (body) {
             setPosts([...posts, ...body.posts]);
             setHasNext(body.has_next);

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { CalendarMonth, Category, Code, Comment, ContentCopy, MenuBook, MoreHoriz, TextSnippet, Web, Widgets } from '@mui/icons-material';
+import { CalendarMonth, Category, Code, Comment, ContentCopy, Copyright, MenuBook, MoreHoriz, TextSnippet, Web, Widgets } from '@mui/icons-material';
 import { Avatar, Box, Grid, IconButton, Link, Paper, Typography } from '@mui/material';
 import { Liked } from '../helpers/Liked.jsx';
 
@@ -12,8 +12,8 @@ export const PostsGrid = (props) => {
             {props.posts === [] ? <></> :
                 props.posts.map((post) => {
                     return (
-                        <Grid item xs={12} md={6} key={post.id}>
-                            <Paper elevation={12} sx={{ borderRadius: '10px', m: 2, p: 2 }}>
+                        <Grid sx={{ display: 'flex', width: '100%' }} item xs={12} md={6} key={post.id}>
+                            <Paper elevation={12} sx={{ borderRadius: '10px', m: 2, p: 2, width: '100%' }}>
                                 {/* START POST HEADER */}
                                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -35,8 +35,8 @@ export const PostsGrid = (props) => {
                                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <Typography variant="h6" color="gray1" sx={{ mb: 1, pt: 1, cursor: 'pointer' }} onClick={() => { navigate(`/post/${post.id}`) }}>
                                             <Widgets color="primary" sx={{ mr: 1, mb: -0.5 }} />
-                                            {post.title.slice(0, 40)}
-                                            {post.title.length > 40 ? '...' : ''}
+                                            {post.title.slice(0, 80)}
+                                            {post.title.length > 80 ? '...' : ''}
                                         </Typography>
                                         <Paper elevation={4} sx={{ display: 'flex', alignItems: 'end', p: 1, gap: 0.5 }}>
                                             <Typography sx={{ fontWeight: '400', whiteSpace: 'nowrap' }}>{post.category}</Typography>

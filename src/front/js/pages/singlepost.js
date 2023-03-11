@@ -62,8 +62,8 @@ export const SinglePost = () => {
 	}, [])
 
 	return (
-		<Box sx={{ my: 3 }}>
-			<Container>
+		<Box sx={{ my: 1 }}>
+			<Box sx={{ pr: { xs: 1, xl: 24 }, pl: { xs: 1, xl: 24 } }}>
 				{data === null ? <Typography>Loading...</Typography> :
 					<>
 						<Paper elevation={12} sx={{ p: 2, borderRadius: '10px' }}>
@@ -101,7 +101,7 @@ export const SinglePost = () => {
 									<Typography sx={{ mb: 2 }} color="subtlegray.lighter">{data.description}</Typography>
 									<a href={data.image} target="_blank">
 										<Box component={'img'} src={data.image} sx={{
-											borderRadius: 2, width: '100%', maxHeight: '500px',
+											borderRadius: 2, width: '100%', maxHeight: '600px',
 											objectFit: 'cover',
 											objectPosition: 'center', cursor: 'pointer', "&:hover": { opacity: '0.9' }
 										}} />
@@ -206,7 +206,7 @@ export const SinglePost = () => {
 						{/* END POST COMMENTS */}
 
 					</>}
-			</Container>
+			</Box>
 		</Box >
 	);
 };

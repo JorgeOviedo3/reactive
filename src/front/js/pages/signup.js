@@ -25,32 +25,29 @@ export const Signup = () => {
 
     return (
         <Box sx={{ p: { md: 2, sm: 0 }, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
-            <Container sx={{ p: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h1" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Sign Up
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '320px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '100%', md: '60%' } }}>
                     <Box sx={{
-                        borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', height: '180px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
+                        borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', display: 'flex', mt: 2, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
                         {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" ?
-                            <AccountCircleSharp sx={{ width: '100px', height: '100px', color: 'white', mt: -4 }} /> :
+                            <AccountCircleSharp sx={{ width: '100px', height: '100px', color: 'white' }} /> :
                             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Avatar src={avatar} sx={{ width: '100px', height: '100px', mt: -4 }}></Avatar>
+                                <Avatar src={avatar} sx={{ width: '100px', height: '100px' }}></Avatar>
                             </Box>}
                     </Box>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
-                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" ? <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
-                            <CloudinaryUploadWidget avatar={avatar} set={setAvatar} preset="ajoinryy" width={350} />
-                            <Typography variant="body2">Please upload your profile picture.</Typography>
-                        </Box> :
-                            <></>}
                         <TextField
                             fullWidth
                             autoFocus
                             required
                             label="Email"
                             type="email"
+                            variant="filled"
+                            color="gray1"
                             onChange={(event) => {
                                 setEmail(event.target.value)
                             }}
@@ -62,6 +59,8 @@ export const Signup = () => {
                         <TextField
                             fullWidth
                             required
+                            variant="filled"
+                            color="gray1"
                             label="Username"
                             onChange={(event) => {
                                 setUsername(event.target.value)
@@ -74,6 +73,8 @@ export const Signup = () => {
                         <TextField
                             fullWidth
                             required
+                            variant="filled"
+                            color="gray1"
                             label="Password"
                             type={showPassword ? 'text' : 'password'}
                             onChange={(event) => {
@@ -91,6 +92,10 @@ export const Signup = () => {
                                 </IconButton></InputAdornment>
                             }}
                         />
+                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" && <Box id="upload_widget" sx={{ display: 'flex', alignItems: 'center', gap: 2, width: '100%' }}>
+                            <CloudinaryUploadWidget avatar={avatar} set={setAvatar} preset="ajoinryy" width={350} />
+                            <Typography variant="body2">Please upload your profile picture.</Typography>
+                        </Box>}
                         {email === "" || password === "" || username === "" ? <Button variant="outlined" sx={{ width: '100%' }} disabled>Sign Up</Button> :
                             <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
                                 actions.signUp(username, password, email, avatar);

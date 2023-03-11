@@ -61,11 +61,11 @@ export const UploadPost = () => {
 
     return (
         <Box sx={{ p: { md: 2, sm: 0 }, mb: 5, display: 'flex', justifyContent: 'center', alignItems: 'start' }}>
-            <Container sx={{ p: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h1" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Upload
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '95%', sm: '500px', md: '700px' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '100%', lg: '90%' } }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, borderRadius: '30px', mt: -4, p: 5 }}>
                         <Typography sx={{ mt: 2 }}>Here, you can share your latest reactive code components with the community and get feedback from fellow developers.</Typography>
                         <TextField
