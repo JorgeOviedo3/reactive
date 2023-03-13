@@ -85,6 +85,7 @@ def update_user():
         user.password = new_user_data["password"]
         user.email = new_user_data["email"]
         user.avatar = new_user_data["avatar"]
+        user.bio = new_user_data["bio"]
         db.session.commit()
 
         return jsonify(user.serialize()), 201

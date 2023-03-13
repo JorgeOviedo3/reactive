@@ -55,7 +55,7 @@ export const UploadPost = () => {
     useEffect(() => {
         const authenticated = sessionStorage.getItem("authenticated");
         if (!authenticated) {
-            navigate('/signup')
+            navigate('/login')
         }
     }, [])
 

@@ -53,7 +53,7 @@ export const Signup = () => {
                             }}
                             value={email}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Email color="secondary" /></InputAdornment>,
+                                startAdornment: <InputAdornment position="start"><Email color="primary" /></InputAdornment>,
                             }}
                         />
                         <TextField
@@ -67,7 +67,7 @@ export const Signup = () => {
                             }}
                             value={username}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Person4 color="secondary" /></InputAdornment>
+                                startAdornment: <InputAdornment position="start"><Person4 color="primary" /></InputAdornment>
                             }}
                         />
                         <TextField
@@ -82,7 +82,7 @@ export const Signup = () => {
                             }}
                             value={password}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Lock color="secondary" /></InputAdornment>,
+                                startAdornment: <InputAdornment position="start"><Lock color="primary" /></InputAdornment>,
                                 endAdornment: <InputAdornment position="end"><IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
@@ -97,7 +97,7 @@ export const Signup = () => {
                             <Typography variant="body2">Please upload your profile picture.</Typography>
                         </Box>}
                         {email === "" || password === "" || username === "" ? <Button variant="outlined" sx={{ width: '100%' }} disabled>Sign Up</Button> :
-                            <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
+                            <Button variant="contained" color="primary" sx={{ width: '100%' }} onClick={() => {
                                 actions.signUp(username, password, email, avatar);
                             }}>Sign Up</Button>
                         }

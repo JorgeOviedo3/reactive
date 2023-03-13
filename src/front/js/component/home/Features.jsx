@@ -12,15 +12,10 @@ export const Features = () => {
     return (
         <Box sx={{ mt: "-120px", pt: "120px" }} id="features">
             <Container sx={{ height: '100%', display: 'flex', gap: { xs: 5, md: 1 }, flexDirection: { xs: 'column', md: 'row' } }}>
-                <Paper elevation={10} sx={{ width: { xs: '100%', md: '50%' }, background: '#a266e2', height: '500px', borderRadius: 5, overflow: { xs: 'hidden', md: 'visible' } }}>
-                    <Box height="30%" sx={{ margin: 5 }}>
-                        <Box component="img" sx={{ width: '50px' }} src={ReactiveLogoWhite}></Box>
-                        <Typography variant="h2" sx={{ color: 'white', fontWeight: 500, fontSize: { xs: '40px', md: '3.75rem' } }}>A place where you can share your code</Typography>
-                    </Box>
-                    <Box height="70%" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', overflow: 'visible' }}>
-                        <Button variant="outlined" color="gray1" sx={{ ml: 5, width: '50%' }}>Our Features</Button>
-                        <Box component="img" sx={{ mt: 3, width: '200px' }} src={ReactiveReceipt}></Box>
-                    </Box>
+                <Paper elevation={10} sx={{ width: { xs: '100%', md: '50%' }, background: '#a266e2', height: '500px', borderRadius: 5, p: 3 }}>
+                    <Box component="img" sx={{ width: '50px' }} src={ReactiveLogoWhite}></Box>
+                    <Typography variant="h2" sx={{ color: 'white', fontWeight: 500, fontSize: { xs: '40px', md: '3.75rem' } }}>An awesome place where you can share your code</Typography>
+                    <Button variant="outlined" color="subtlegray">Feed</Button>
                 </Paper >
                 <Paper elevation={10} sx={{ width: { xs: '100%', md: '25%', height: '500px', borderRadius: '20px' }, overflow: { xs: 'hidden', md: 'visible' } }}>
                     <Box height="40%" sx={{ display: 'flex', justifyContent: 'center' }} >
