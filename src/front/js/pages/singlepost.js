@@ -66,12 +66,12 @@ export const SinglePost = () => {
 			<Box sx={{ pr: { xs: 1, xl: 24 }, pl: { xs: 1, xl: 24 } }}>
 				{data === null ? <Typography>Loading...</Typography> :
 					<>
-						<Paper elevation={12} sx={{ p: 2, borderRadius: '10px' }}>
+						<Box sx={{ borderRadius: '10px' }}>
 							{/* START POST HEADER */}
 							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
 									<IconButton sx={{ ml: -1 }} onClick={() => { navigate('/feed') }}>
-										<ArrowBack color="secondary" />
+										<ArrowBack color="primary" />
 									</IconButton>
 									<Paper onClick={(e) => { navigate(`/user/${data.user_username}`); }}
 										sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, pr: 2, pl: 2, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' }, ml: 1 }}>
@@ -149,7 +149,7 @@ export const SinglePost = () => {
 								</Box>
 							</Box>
 							{/* END POST FOOTER */}
-						</Paper>
+						</Box>
 
 						{/* START POST COMMENTS */}
 						<Box sx={{ my: 2, }}>
@@ -172,11 +172,9 @@ export const SinglePost = () => {
 								{store.authenticated && newComment !== "" ?
 									<Button
 										onClick={() => {
-											if (newComment !== "") {
-												if (sendComment()) {
-													setNewComment("");
-													getPostById();
-												}
+											if (sendComment()) {
+												setNewComment("");
+												getPostById();
 											}
 										}}
 										sx={{ height: '55px', width: '120px' }} variant="contained" color="primary">Submit</Button>
@@ -193,7 +191,7 @@ export const SinglePost = () => {
 											<Avatar src={comment.user_avatar} />
 											<Box sx={{ ml: 2, width: '100%' }}>
 												<Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 4, alignItems: 'center' }}>
-													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{data.user_username}</Typography>
+													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{comment.username}</Typography>
 													<Typography>{comment.date}</Typography>
 												</Box>
 												<Typography>{comment.text}</Typography>

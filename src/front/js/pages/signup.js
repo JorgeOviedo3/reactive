@@ -12,7 +12,7 @@ export const Signup = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg");
+    const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/865816064298188833/1084915390741741578/ReactiveLogo.png");
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -33,7 +33,7 @@ export const Signup = () => {
                     <Box sx={{
                         borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', display: 'flex', mt: 2, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
-                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" ?
+                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1084915390741741578/ReactiveLogo.png" ?
                             <AccountCircleSharp sx={{ width: '100px', height: '100px', color: 'white' }} /> :
                             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Avatar src={avatar} sx={{ width: '100px', height: '100px' }}></Avatar>

@@ -52,6 +52,7 @@ class Post(db.Model):
     date = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(5000), nullable=False)
     category = db.Column(db.String(80), nullable=False)
+    like = db.relationship("Like", backref="post")
 
     def __init__(self, **kwargs):
         self.title = kwargs["title"]
@@ -91,7 +92,7 @@ class Post(db.Model):
 
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, **kwargs):
@@ -107,6 +108,22 @@ class Like(db.Model):
             return new_like
         except Exception as Error: 
             raise Exception(Error.args[0], 400)
+
+    
+    def serializePost(self):
+        return {
+            "id" : self.post.id,
+            "title" : self.post.title,
+            "readme" : self.post.readme,
+            "image" : self.post.image,
+            "code" : self.post.code,
+            "date": self.post.date,
+            "description": self.post.description,
+            "category": self.post.category,
+            "user_id": self.post.user.id,
+            "user_username": self.post.user.username,
+            "user_avatar": self.post.user.avatar
+        }
 
     def serialize(self):
         return {
