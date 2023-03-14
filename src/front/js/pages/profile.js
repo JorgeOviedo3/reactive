@@ -1,3 +1,4 @@
+import { FavoriteBorder, Widgets } from "@mui/icons-material";
 import { Avatar, Box, Button, Paper, Typography } from "@mui/material";
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
@@ -55,9 +56,9 @@ export const Profile = () => {
                                 <Typography color="subtlegray.main">Joined {user.date}</Typography>
                             </Box>
                         </Paper>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2, margin: 'auto', gap: 2 }}>
-                            <Button onClick={handleShowSaved} variant={showSaved ? "outlined" : "contained"} sx={{ mr: 6 }}>Posted</Button>
-                            <Button onClick={handleShowSaved} variant={showSaved ? "contained" : "outlined"} color="secondary">Saved</Button>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2, margin: 'auto', gap: 5 }}>
+                            <Button onClick={handleShowSaved} variant={showSaved ? "outlined" : "contained"} sx={{ width: '50%' }}>Posted<Widgets color="primary" sx={{ transform: 'scale(0.7)' }} /></Button>
+                            <Button onClick={handleShowSaved} variant={showSaved ? "contained" : "outlined"} sx={{ width: '50%' }} color="secondary">Saved<FavoriteBorder sx={{ transform: 'scale(0.7)' }} color="secondary" /></Button>
                         </Box>
                     </Box>
                     {showSaved ? <SavedFeed userId={user.id} /> : <ProfileFeed userId={user.id} />}

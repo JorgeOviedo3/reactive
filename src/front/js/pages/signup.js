@@ -1,6 +1,5 @@
-import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Email, Lock, Password, Person4, Visibility, VisibilityOff } from "@mui/icons-material";
+import { AccountCircleSharp, Email, Lock, Person4, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, IconButton, InputAdornment, Link, Paper, TextField, Typography } from "@mui/material";
-import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";

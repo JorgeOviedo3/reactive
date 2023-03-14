@@ -22,16 +22,16 @@ const details = [
 
 export const Cards = () => {
     return (
-        <Box id="cards" sx={{ my: { xs: 10, md: 20 } }}>
+        <Box id="cards" sx={{ my: 10 }}>
             <Container sx={{ height: '100%' }}>
-                <Typography variant="h1" textAlign={'center'} sx={{ fontWeight: 500 }}>Key Features</Typography>
+                <Typography variant="h2" >Key Features</Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: { xs: 'center', md: 'start' }, flexWrap: 'wrap', py: '50px', gap: '50px', flexDirection: { xs: "column", md: "row" } }}>
                     {details.map((detail) => {
                         return (
                             <Paper elevation={20} sx={{ p: 3, width: '300px', color: 'secondary', display: 'flex', flexDirection: 'column', alignItems: 'center' }} key={detail.title}>
                                 {detail.icon}
                                 <Typography variant="h4" sx={{ fontWeight: 500 }}>{detail.title}</Typography>
-                                <Typography sx={{ fontSize: '1.2rem' }}>{detail.description}</Typography>
+                                <Typography color="subtlegray.lighter" sx={{ fontSize: '1.2rem' }}>{detail.description}</Typography>
                             </Paper>
                         )
                     })}

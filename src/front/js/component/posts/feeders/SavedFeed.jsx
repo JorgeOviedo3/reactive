@@ -32,7 +32,7 @@ export const SavedFeed = (props) => {
             <BottomScrollListener offset={900} onBottom={handleContainerOnBottom}>
                 <Box sx={{ pr: { xs: 0, xl: 24 }, pl: { xs: 0, xl: 24 } }}>
                     <PostsGrid posts={posts} />
-                    {hasNext ? <img width="50px" height="50px" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/bc0c6b69321565.5b7d0cbe723b5.gif"></img> : <Typography textAlign={'center'}>This is the end.</Typography>}
+                    {hasNext ? <Typography textAlign={'center'}>Loading...</Typography> : <Typography textAlign={'center'}>This is the end.</Typography>}
                 </Box>
             </BottomScrollListener>
         </Box >

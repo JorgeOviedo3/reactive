@@ -47,3 +47,7 @@ html {
     border-radius: 10px;
     border: 3px solid #333333;
 }
+
+.css-1bjobni-MuiButtonBase-root-MuiFab-root {
+    background-color: #a266e2 !important;
+}

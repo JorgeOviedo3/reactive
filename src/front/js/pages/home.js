@@ -7,6 +7,7 @@ import { Hero } from "../component/home/Hero.jsx";
 import { Cards } from "../component/home/Cards.jsx";
 import { Features } from "../component/home/Features.jsx";
 import { About } from "../component/home/About.jsx";
+import { JoinNow } from "../component/home/JoinNow.jsx";
 
 
 export const Home = () => {
@@ -18,6 +19,7 @@ export const Home = () => {
 			<Features />
 			<Cards />
 			<About />
+			<JoinNow />
 		</div>
 	);
 };

@@ -63,10 +63,10 @@ export const SinglePost = () => {
 
 	return (
 		<Box sx={{ my: 1 }}>
-			<Box sx={{ pr: { xs: 1, xl: 24 }, pl: { xs: 1, xl: 24 } }}>
+			<Box sx={{ pr: { xs: 1, lg: 30, xl: 40 }, pl: { xs: 1, lg: 30, xl: 40 }, py: 2 }}>
 				{data === null ? <Typography>Loading...</Typography> :
 					<>
-						<Box sx={{ borderRadius: '10px' }}>
+						<Paper elevation={10} sx={{ borderRadius: '10px', p: 2 }}>
 							{/* START POST HEADER */}
 							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -149,7 +149,7 @@ export const SinglePost = () => {
 								</Box>
 							</Box>
 							{/* END POST FOOTER */}
-						</Box>
+						</Paper>
 
 						{/* START POST COMMENTS */}
 						<Box sx={{ my: 2, }}>
@@ -184,7 +184,7 @@ export const SinglePost = () => {
 
 							</Box>
 							<Typography sx={{ mt: 3 }}>Or see what people are saying</Typography>
-							<Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'start' }}>
+							<Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', alignItems: 'start' }}>
 								{data.comments.map((comment) => {
 									return (
 										<Paper sx={{ display: 'flex', p: 2, my: 1, width: '100%', maxWidth: { xs: '320', md: '32%' } }} key={`comment-${comment.id}`} elevation={12}>
