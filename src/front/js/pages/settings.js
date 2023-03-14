@@ -121,6 +121,8 @@ export const Settings = () => {
                         </Box>
                         {email === "" || password === "" || username === "" || bio === "" ? <Button variant="outlined" sx={{ width: '100%' }} disabled>Update</Button> :
                             <Button variant="contained" color="primary" sx={{ width: '100%' }} onClick={() => {
+                                const success = actions.updateUser(username, password, email, avatar, bio);
+                                if (success) navigate(`/user/${store.currentUser.username}`)
                             }}>Update</Button>
                         }
                     </Box>

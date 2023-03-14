@@ -85,6 +85,7 @@ def update_user():
         user.password = new_user_data["password"]
         user.email = new_user_data["email"]
         user.avatar = new_user_data["avatar"]
+        user.bio = new_user_data["bio"]
         db.session.commit()
 
         return jsonify(user.serialize()), 201
@@ -119,9 +120,9 @@ def create_post():
     except Exception as error: 
         return jsonify(error.args[0]), error.args[1] if len(error.args) > 1 else 500
 
-@api.route('/get_posts_profile/<int:user_id_param>/<int:page_param>', methods=['GET'])
-def get_posts_profile(user_id_param, page_param):
-    pagination = Post.query.filter_by(user_id = user_id_param).order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
+@api.route('/get_posts/<int:page_param>', methods=['GET'])
+def get_posts(page_param):
+    pagination = Post.query.order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
     posts = []
     for post in pagination.items:
         serialize = post.serialize()
@@ -142,9 +143,32 @@ def get_posts_profile(user_id_param, page_param):
     data["posts"] = posts
     return jsonify(data)
 
-@api.route('/get_posts/<int:page_param>', methods=['GET'])
-def get_posts(page_param):
-    pagination = Post.query.order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
+@api.route('/get_posts_saved/<int:user_id_param>/<int:page_param>', methods=['GET'])
+def get_posts_saved(user_id_param, page_param):
+    pagination = Like.query.filter_by(user_id = user_id_param).order_by(Like.id.desc()).paginate(page=page_param, per_page=6)
+    posts = []
+    for like in pagination.items:
+        serialize = like.serializePost()
+        likes = Like.query.filter_by(post_id = like.post_id)
+        likes_count = 0
+        for like in likes:
+            likes_count = likes_count + 1
+        comments = Comment.query.filter_by(post_id = like.post_id)
+        comment_count = 0
+        for comment in comments:
+            comment_count = comment_count + 1
+        serialize["likes_count"] = likes_count
+        serialize["comments_count"] = comment_count
+        posts.append(serialize)
+    data = {}
+    data["has_next"] = pagination.has_next
+    data["next_page"] = pagination.next_num
+    data["posts"] = posts
+    return jsonify(data)
+
+@api.route('/get_posts_profile/<int:user_id_param>/<int:page_param>', methods=['GET'])
+def get_posts_profile(user_id_param, page_param):
+    pagination = Post.query.filter_by(user_id = user_id_param).order_by(Post.id.desc()).paginate(page=page_param, per_page=6)
     posts = []
     for post in pagination.items:
         serialize = post.serialize()

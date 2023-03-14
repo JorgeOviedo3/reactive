@@ -55,7 +55,7 @@ export const UploadPost = () => {
     useEffect(() => {
         const authenticated = sessionStorage.getItem("authenticated");
         if (!authenticated) {
-            navigate('/signup')
+            navigate('/login')
         }
     }, [])
 
@@ -162,7 +162,7 @@ export const UploadPost = () => {
                             <img src={image}></img>
                         }
                         {title !== "" && readme !== "" && code !== "" && description !== "" && category !== "" && image !== "" ?
-                            <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
+                            <Button variant="contained" color="primary" sx={{ width: '100%' }} onClick={() => {
                                 sendPost();
                             }}>POST</Button> :
                             <Button variant="outlined" sx={{ width: '100%' }} disabled>All required</Button>

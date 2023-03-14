@@ -63,15 +63,15 @@ export const SinglePost = () => {
 
 	return (
 		<Box sx={{ my: 1 }}>
-			<Box sx={{ pr: { xs: 1, xl: 24 }, pl: { xs: 1, xl: 24 } }}>
+			<Box sx={{ pr: { xs: 1, lg: 30, xl: 40 }, pl: { xs: 1, lg: 30, xl: 40 }, py: 2 }}>
 				{data === null ? <Typography>Loading...</Typography> :
 					<>
-						<Paper elevation={12} sx={{ p: 2, borderRadius: '10px' }}>
+						<Paper elevation={10} sx={{ borderRadius: '10px', p: 2 }}>
 							{/* START POST HEADER */}
 							<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap-text', mb: 2 }}>
 								<Box sx={{ display: 'flex', alignItems: 'center' }}>
 									<IconButton sx={{ ml: -1 }} onClick={() => { navigate('/feed') }}>
-										<ArrowBack color="secondary" />
+										<ArrowBack color="primary" />
 									</IconButton>
 									<Paper onClick={(e) => { navigate(`/user/${data.user_username}`); }}
 										sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', transition: '0.25s', p: 1, pr: 2, pl: 2, "&:hover": { transform: 'scale(1.02)', transition: '0.25s', color: '#a266e2' }, ml: 1 }}>
@@ -172,11 +172,9 @@ export const SinglePost = () => {
 								{store.authenticated && newComment !== "" ?
 									<Button
 										onClick={() => {
-											if (newComment !== "") {
-												if (sendComment()) {
-													setNewComment("");
-													getPostById();
-												}
+											if (sendComment()) {
+												setNewComment("");
+												getPostById();
 											}
 										}}
 										sx={{ height: '55px', width: '120px' }} variant="contained" color="primary">Submit</Button>
@@ -186,14 +184,14 @@ export const SinglePost = () => {
 
 							</Box>
 							<Typography sx={{ mt: 3 }}>Or see what people are saying</Typography>
-							<Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'start' }}>
+							<Box sx={{ display: 'flex', gap: { xs: 1, md: 2 }, flexWrap: 'wrap', alignItems: 'start' }}>
 								{data.comments.map((comment) => {
 									return (
 										<Paper sx={{ display: 'flex', p: 2, my: 1, width: '100%', maxWidth: { xs: '320', md: '32%' } }} key={`comment-${comment.id}`} elevation={12}>
 											<Avatar src={comment.user_avatar} />
 											<Box sx={{ ml: 2, width: '100%' }}>
 												<Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 4, alignItems: 'center' }}>
-													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{data.user_username}</Typography>
+													<Typography color="gray1" sx={{ fontWeight: '500', fontSize: '1.2rem' }}>{comment.username}</Typography>
 													<Typography>{comment.date}</Typography>
 												</Box>
 												<Typography>{comment.text}</Typography>

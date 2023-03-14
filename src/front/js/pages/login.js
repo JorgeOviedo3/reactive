@@ -25,7 +25,7 @@ export const Login = () => {
                 <Typography variant="h2" color="gray1" sx={{ fontWeight: 800, fontSize: { xs: '5rem', md: '5.5rem' }, mt: 2, mb: 1 }}>
                     Log In
                 </Typography>
-                <Paper sx={{ borderRadius: '30px', width: { xs: '100%', lg: '90%' } }}>
+                <Paper sx={{ borderRadius: '30px', width: { xs: '100%', md: '60%' } }}>
                     <Box sx={{
                         borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', mt: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
@@ -43,7 +43,7 @@ export const Login = () => {
                             color="gray1"
                             value={username}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Person4 color="secondary" /></InputAdornment>
+                                startAdornment: <InputAdornment position="start"><Person4 color="primary" /></InputAdornment>
                             }}
                         />
                         <TextField
@@ -58,7 +58,7 @@ export const Login = () => {
                             }}
                             value={password}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Lock color="secondary" /></InputAdornment>,
+                                startAdornment: <InputAdornment position="start"><Lock color="primary" /></InputAdornment>,
                                 endAdornment: <InputAdornment position="end"><IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
@@ -68,7 +68,7 @@ export const Login = () => {
                                 </IconButton></InputAdornment>
                             }}
                         />
-                        <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
+                        <Button variant="contained" color="primary" sx={{ width: '100%' }} onClick={() => {
                             actions.logIn(username, password);
                         }}>Login</Button>
                         <Typography textAlign={'center'}>Don't have an account? <Link href="/signup">Sign Up</Link></Typography>

@@ -53,7 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try {
 					const response = await fetch(`${store.api}/login`, ops);
 					if (!response.ok) {
-						alert("Login problem endpoint /login");
+						alert("Wrong username or password.");
 						return;
 					}
 					const body = await response.json();
@@ -99,7 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				sessionStorage.clear();
 				setStore({ token: undefined, authenticated: false, currentUser: {} })
 			},
-			updateUser: async (username, password, email, phone) => {
+			updateUser: async (username, password, email, avatar, bio) => {
 				const store = getStore();
 				const actions = getActions();
 				const ops = {
@@ -112,11 +112,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 						username: username,
 						password: password,
 						email: email,
-						phone: phone,
+						avatar: avatar,
+						bio: bio
 					}),
 				}
 				try {
-					const response = await fetch(`${store.apiUrl}/update-user`, ops);
+					const response = await fetch(`${store.api}/update-user`, ops);
 					if (!response.ok) {
 						alert("Update user has a problem with endpoint /update-user");
 						return;

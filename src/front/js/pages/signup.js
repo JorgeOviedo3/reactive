@@ -1,6 +1,5 @@
-import { AccountCircleOutlined, AccountCircleSharp, AccountCircleTwoTone, Email, Lock, Password, Person4, Visibility, VisibilityOff } from "@mui/icons-material";
+import { AccountCircleSharp, Email, Lock, Person4, Visibility, VisibilityOff } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, IconButton, InputAdornment, Link, Paper, TextField, Typography } from "@mui/material";
-import Image from "mui-image";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CloudinaryUploadWidget from "../component/utils/CloudinaryUploadWidget";
@@ -12,7 +11,7 @@ export const Signup = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg");
+    const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/865816064298188833/1084915390741741578/ReactiveLogo.png");
 
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -33,7 +32,7 @@ export const Signup = () => {
                     <Box sx={{
                         borderTopRightRadius: '30px', borderTopLeftRadius: '30px', width: '100%', display: 'flex', mt: 2, justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
                     }}>
-                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1079451034910474300/X1-hZ8B2_400x400.jpg" ?
+                        {avatar === "https://media.discordapp.net/attachments/865816064298188833/1084915390741741578/ReactiveLogo.png" ?
                             <AccountCircleSharp sx={{ width: '100px', height: '100px', color: 'white' }} /> :
                             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Avatar src={avatar} sx={{ width: '100px', height: '100px' }}></Avatar>
@@ -53,7 +52,7 @@ export const Signup = () => {
                             }}
                             value={email}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Email color="secondary" /></InputAdornment>,
+                                startAdornment: <InputAdornment position="start"><Email color="primary" /></InputAdornment>,
                             }}
                         />
                         <TextField
@@ -67,7 +66,7 @@ export const Signup = () => {
                             }}
                             value={username}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Person4 color="secondary" /></InputAdornment>
+                                startAdornment: <InputAdornment position="start"><Person4 color="primary" /></InputAdornment>
                             }}
                         />
                         <TextField
@@ -82,7 +81,7 @@ export const Signup = () => {
                             }}
                             value={password}
                             InputProps={{
-                                startAdornment: <InputAdornment position="start"><Lock color="secondary" /></InputAdornment>,
+                                startAdornment: <InputAdornment position="start"><Lock color="primary" /></InputAdornment>,
                                 endAdornment: <InputAdornment position="end"><IconButton
                                     aria-label="toggle password visibility"
                                     onClick={handleClickShowPassword}
@@ -97,7 +96,7 @@ export const Signup = () => {
                             <Typography variant="body2">Please upload your profile picture.</Typography>
                         </Box>}
                         {email === "" || password === "" || username === "" ? <Button variant="outlined" sx={{ width: '100%' }} disabled>Sign Up</Button> :
-                            <Button variant="contained" color="secondary" sx={{ width: '100%' }} onClick={() => {
+                            <Button variant="contained" color="primary" sx={{ width: '100%' }} onClick={() => {
                                 actions.signUp(username, password, email, avatar);
                             }}>Sign Up</Button>
                         }
