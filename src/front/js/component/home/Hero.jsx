@@ -1,6 +1,5 @@
 import React from 'react'
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
-import Image from 'mui-image';
 import { ArrowForward } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ReactiveComputerHero from "../../../img/ReactiveComputerHero.png"
@@ -18,7 +17,7 @@ export const Hero = () => {
                             <Box component="img" sx={{ width: "50px" }} src={ReactiveLogo}></Box>
                             <Typography variant="h1" sx={{ fontWeight: 800, color: '#D3D3D3', fontSize: { xs: '4.2rem', md: '6.5rem' } }}>
                                 Collab with<br />
-                                <p style={{ display: 'inline', color: '#a266e2' }}>React </p>
+                                <p style={{ display: 'inline', background: 'radial-gradient(circle, rgba(162,102,226,1) 68%, rgba(83,68,253,1) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>React </p>
                                 Devs
                             </Typography>
                             <Typography color="gray1" variant="h6" textAlign="justify" >Save time, be Reactive - A social network for developers</Typography>
